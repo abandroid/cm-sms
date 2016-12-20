@@ -9,8 +9,8 @@
 
 namespace Endroid\CmSms;
 
-use Endroid\Bundle\CmSmsBundle\Exception\InvalidRecipientException;
-use Endroid\Bundle\CmSmsBundle\Exception\InvalidSenderException;
+use Endroid\Exception\InvalidRecipientException;
+use Endroid\Exception\InvalidSenderException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Client
