@@ -1,0 +1,36 @@
+{
+    "name": "endroid/cm-sms",
+    "description": "Endroid CM SMS",
+    "keywords": ["endroid", "cm", "sms"],
+    "homepage": "https://github.com/endroid/CmSms",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen van den Enden",
+            "email": "info@endroid.nl",
+            "homepage": "http://endroid.nl/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Endroid\\CmSms\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Endroid\\CmSms\\": "tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
