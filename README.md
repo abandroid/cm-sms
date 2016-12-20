@@ -28,11 +28,37 @@ Of course you can also download the library and build your own autoloader.
 ## Usage
 
 ```php
-use Endroid\CmSms\Client;
-
-$client = new Client();
+    use Endroid\CmSms\Client;
+    
+    $client = new Client();
+    
+    $options = [
+        'sender' => 'Endroid',
+        'unicode' => 'auto',
+        'minimumNumberOfMessageParts' => 1,
+        'maximumNumberOfMessageParts' => 3,
+    ];
+    
+    $message = new Message();
+    $message->addTo('0600000000');
+    $message->setBody('SMS Messaging is the future!');
+    
+    // Send single message (to one or more recipients)
+    $client->sendMessage($message, $options);
+    
+    // Or bulk send multiple messages (to one or more recipients)
+    $client->sendMessages([$message, ...], $options);
 
 ```
+
+## Options
+
+The following sending options are available.
+
+* sender: default sender
+* unicode: unicode handling (auto, force or never)
+* minimumNumberOfMessageParts: min when splitting up long messages
+* maximumNumberOfMessageParts: max when splitting up long messages
 
 ## Symfony
 
