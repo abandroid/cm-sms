@@ -1,7 +1,7 @@
 {
     "name": "endroid/cm-sms",
     "description": "Endroid CM SMS",
-    "keywords": ["endroid", "cm", "sms"],
+    "keywords": ["endroid", "cm", "sms", "bundle", "symfony"],
     "homepage": "https://github.com/endroid/CmSms",
     "type": "library",
     "license": "MIT",

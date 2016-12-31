@@ -28,26 +28,26 @@ Of course you can also download the library and build your own autoloader.
 ## Usage
 
 ```php
-    use Endroid\CmSms\Client;
-    
-    $client = new Client();
-    
-    $options = [
-        'sender' => 'Endroid',
-        'unicode' => 'auto',
-        'minimumNumberOfMessageParts' => 1,
-        'maximumNumberOfMessageParts' => 3,
-    ];
-    
-    $message = new Message();
-    $message->addTo('0600000000');
-    $message->setBody('SMS Messaging is the future!');
-    
-    // Send single message (to one or more recipients)
-    $client->sendMessage($message, $options);
-    
-    // Or bulk send multiple messages (to one or more recipients)
-    $client->sendMessages([$message, ...], $options);
+use Endroid\CmSms\Client;
+
+$client = new Client();
+
+$options = [
+    'sender' => 'Endroid',
+    'unicode' => 'auto',
+    'minimumNumberOfMessageParts' => 1,
+    'maximumNumberOfMessageParts' => 3,
+];
+
+$message = new Message();
+$message->addTo('0600000000');
+$message->setBody('SMS Messaging is the future!');
+
+// Send single message (to one or more recipients)
+$client->sendMessage($message, $options);
+
+// Or bulk send multiple messages (to one or more recipients)
+$client->sendMessages([$message, ...], $options);
 
 ```
 
@@ -75,18 +75,20 @@ public function registerBundles()
         new Endroid\CmSms\Bundle\EndroidCmSmsBundle(),
     ];
 }
+
 ```
 
 The default parameters can be overridden via the configuration.
 
 ```yaml
-    endroid_cm_sms:
-        product_token: '00000000-0000-0000-0000-000000000000'
-        defaults:
-            sender: 'Endroid'
-            unicode: 'auto'
-            minimumNumberOfMessageParts: 1
-            maximumNumberOfMessageParts: 3
+endroid_cm_sms:
+    product_token: '00000000-0000-0000-0000-000000000000'
+    defaults:
+        sender: 'Endroid'
+        unicode: 'auto'
+        minimumNumberOfMessageParts: 1
+        maximumNumberOfMessageParts: 3
+        
 ```
 
 ## Versioning
