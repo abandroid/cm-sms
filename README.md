@@ -62,7 +62,7 @@ The following sending options are available.
 
 ## Symfony integration
 
-Register the Symfony bundle int the kernel.
+Register the Symfony bundle in the kernel.
 
 ```php
 // app/AppKernel.php
@@ -88,6 +88,13 @@ endroid_cm_sms:
         minimumNumberOfMessageParts: 1
         maximumNumberOfMessageParts: 3
         
+```
+
+Now you can retrieve the client as follows.
+
+```php
+$client = $this->get('endroid.cm_sms.client');
+
 ```
 
 ## Versioning
