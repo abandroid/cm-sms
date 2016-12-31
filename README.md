@@ -64,7 +64,7 @@ The following sending options are available.
 
 Register the Symfony bundle int the kernel.
 
-``` php
+```php
 // app/AppKernel.php
 
 public function registerBundles()
