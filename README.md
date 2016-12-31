@@ -60,9 +60,34 @@ The following sending options are available.
 * minimumNumberOfMessageParts: min when splitting up long messages
 * maximumNumberOfMessageParts: max when splitting up long messages
 
-## Symfony
+## Symfony integration
 
-You can use [`EndroidCmSmsBundle`](https://github.com/endroid/EndroidCmSmsBundle) to integrate this service in your Symfony application.
+Register the Symfony bundle int the kernel.
+
+``` php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = [
+        // ...
+        new Endroid\CmSms\Bundle\EndroidCmSmsBundle(),
+    ];
+}
+```
+
+The default parameters can be overridden via the configuration.
+
+```yaml
+    endroid_cm_sms:
+        product_token: '00000000-0000-0000-0000-000000000000'
+        defaults:
+            sender: 'Endroid'
+            unicode: 'auto'
+            minimumNumberOfMessageParts: 1
+            maximumNumberOfMessageParts: 3
+```
 
 ## Versioning
 

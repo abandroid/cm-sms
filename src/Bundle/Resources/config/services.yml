@@ -1,0 +1,3 @@
+services:
+    endroid.cm_sms.client:
+        class: Endroid\CmSms\Client
