@@ -24,6 +24,11 @@
             "Endroid\\CmSms\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Endroid\\CmSms\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "bin-dir": "bin"
     },
