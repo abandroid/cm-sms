@@ -48,7 +48,6 @@ $client->sendMessage($message, $options);
 
 // Or bulk send multiple messages (to one or more recipients)
 $client->sendMessages([$message, ...], $options);
-
 ```
 
 ## Options
@@ -74,7 +73,6 @@ public function registerBundles()
         new Endroid\CmSms\Bundle\EndroidCmSmsBundle(),
     ];
 }
-
 ```
 
 The default parameters can be overridden via the configuration.
@@ -87,14 +85,12 @@ endroid_cm_sms:
         unicode: 'auto'
         minimumNumberOfMessageParts: 1
         maximumNumberOfMessageParts: 3
-        
 ```
 
 Now you can retrieve the client as follows.
 
 ```php
 $client = $this->get('endroid.cm_sms.client');
-
 ```
 
 ## Versioning
