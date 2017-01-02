@@ -11,6 +11,10 @@ namespace Endroid\CmSms;
 
 use Endroid\Exception\InvalidRecipientException;
 use Endroid\Exception\InvalidSenderException;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Client
@@ -40,8 +44,8 @@ class Client
     protected $defaultOptions = [
         'sender' => null,
         'unicode' => self::UNICODE_AUTO,
-        'minimumNumberOfMessageParts' => 1,
-        'maximumNumberOfMessageParts' => 1,
+        'minimum_number_of_message_parts' => 1,
+        'maximum_number_of_message_parts' => 1,
     ];
 
     /**
@@ -86,15 +90,20 @@ class Client
     /**
      * @param Message[] $messages
      * @param array|null $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
      * @throws InvalidSenderException
      */
     public function sendMessages(array $messages, array $options = [])
     {
+        if (count($messages) == 0) {
+            return true;
+        }
+
         $optionsResolver = new OptionsResolver();
         $optionsResolver->setDefaults($this->options);
         $options = $optionsResolver->resolve($options + $this->options);
 
-        $request = (object) [
+        $json = (object) [
             'messages' => (object) [
                 'authentication' => (object) [
                     'producttoken' => $this->productToken
@@ -103,9 +112,20 @@ class Client
             ]
         ];
 
-        header('Content-Type: application/json');
-        echo json_encode($request);
-        die;
+        $client = new GuzzleClient();
+        $adapter = new GuzzleAdapter($client);
+        $request = new Request('POST', $this->baseUrl, ['Content-Type' => 'application/json'], json_encode($json));
+        $response = $adapter->sendRequest($request);
+
+        if (!$response instanceof Response) {
+            return false;
+        }
+
+        if ($response->getStatusCode() != 200) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -138,8 +158,8 @@ class Client
                 'body' => (object)[
                     'content' => $message->getBody()
                 ],
-                'minimumNumberOfMessageParts' => $options['minimumNumberOfMessageParts'],
-                'maximumNumberOfMessageParts' => $options['maximumNumberOfMessageParts'],
+                'minimum_number_of_message_parts' => $options['minimum_number_of_message_parts'],
+                'maximum_number_of_message_parts' => $options['maximum_number_of_message_parts'],
             ];
 
             $messageJson = $this->incorporateUnicodeOption($messageJson, $options['unicode']);

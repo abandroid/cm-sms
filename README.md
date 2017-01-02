@@ -35,8 +35,8 @@ $client = new Client();
 $options = [
     'sender' => 'Endroid',
     'unicode' => 'auto',
-    'minimumNumberOfMessageParts' => 1,
-    'maximumNumberOfMessageParts' => 3,
+    'minimum_number_of_message_parts' => 1,
+    'maximum_number_of_message_parts' => 3,
 ];
 
 $message = new Message();
@@ -56,8 +56,8 @@ The following sending options are available.
 
 * sender: default sender
 * unicode: unicode handling (auto, force or never)
-* minimumNumberOfMessageParts: min when splitting up long messages
-* maximumNumberOfMessageParts: max when splitting up long messages
+* minimum_number_of_message_parts: min when splitting up long messages
+* maximum_number_of_message_parts: max when splitting up long messages
 
 ## Symfony integration
 
@@ -83,8 +83,8 @@ endroid_cm_sms:
     defaults:
         sender: 'Endroid'
         unicode: 'auto'
-        minimumNumberOfMessageParts: 1
-        maximumNumberOfMessageParts: 3
+        minimum_number_of_message_parts: 1
+        maximum_number_of_message_parts: 3
 ```
 
 Now you can retrieve the client as follows.
