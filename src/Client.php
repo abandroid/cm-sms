@@ -9,8 +9,10 @@
 
 namespace Endroid\CmSms;
 
-use Endroid\Exception\InvalidRecipientException;
-use Endroid\Exception\InvalidSenderException;
+use Endroid\CmSms\Exception\InvalidRecipientException;
+use Endroid\CmSms\Exception\InvalidSenderException;
+use Endroid\CmSms\Exception\RequestException;
+use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -91,7 +93,7 @@ class Client
      * @param Message[] $messages
      * @param array|null $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws InvalidSenderException
+     * @throws RequestException
      */
     public function sendMessages(array $messages, array $options = [])
     {
@@ -115,14 +117,15 @@ class Client
         $client = new GuzzleClient();
         $adapter = new GuzzleAdapter($client);
         $request = new Request('POST', $this->baseUrl, ['Content-Type' => 'application/json'], json_encode($json));
-        $response = $adapter->sendRequest($request);
 
-        if (!$response instanceof Response) {
-            return false;
+        try {
+            $response = $adapter->sendRequest($request);
+        } catch (Exception $exception) {
+            throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if ($response->getStatusCode() != 200) {
-            return false;
+        if (!$response instanceof Response || $response->getStatusCode() != 200) {
+            throw new RequestException('Invalid response');
         }
 
         return true;
@@ -141,11 +144,11 @@ class Client
 
         foreach ($messages as $message) {
             if (is_null($message->getFrom()) && is_null($options['sender'])) {
-                throw new InvalidSenderException('Please provide an SMS sender for your message');
+                throw new InvalidSenderException('Please provide a valid SMS sender for your message');
             }
 
             if (count($message->getTo()) == 0) {
-                throw new InvalidRecipientException('Please provide SMS recipients for your message');
+                throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
 
             if (is_null($message->getFrom())) {

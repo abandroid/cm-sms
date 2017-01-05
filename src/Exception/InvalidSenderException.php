@@ -7,10 +7,8 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\Exception;
+namespace Endroid\CmSms\Exception;
 
-use Exception;
-
-class InvalidSenderException extends Exception
+class InvalidSenderException extends RequestException
 {
 }

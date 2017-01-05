@@ -9,6 +9,8 @@
 
 namespace Endroid\CmSms\Exception;
 
-class InvalidRecipientException extends RequestException
+use Exception;
+
+class RequestException extends Exception
 {
 }
