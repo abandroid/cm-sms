@@ -29,6 +29,7 @@ Of course you can also download the library and build your own autoloader.
 
 ```php
 use Endroid\CmSms\Client;
+use Endroid\CmSms\Exception\RequestException;
 
 $client = new Client();
 
@@ -44,10 +45,18 @@ $message->addTo('0600000000');
 $message->setBody('SMS Messaging is the future!');
 
 // Send single message (to one or more recipients)
-$client->sendMessage($message, $options);
+try {
+    $client->sendMessage($message, $options);
+} catch (RequestException $exception) {
+    // handle exception
+}
 
 // Or bulk send multiple messages (to one or more recipients)
-$client->sendMessages([$message, ...], $options);
+try {
+    $client->sendMessages([$message, ...], $options);
+} catch (RequestException $exception) {
+    // handle exception
+}
 ```
 
 ## Options

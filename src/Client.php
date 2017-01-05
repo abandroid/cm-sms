@@ -92,15 +92,10 @@ class Client
     /**
      * @param Message[] $messages
      * @param array|null $options
-     * @return mixed|\Psr\Http\Message\ResponseInterface
      * @throws RequestException
      */
     public function sendMessages(array $messages, array $options = [])
     {
-        if (count($messages) == 0) {
-            return true;
-        }
-
         $optionsResolver = new OptionsResolver();
         $optionsResolver->setDefaults($this->options);
         $options = $optionsResolver->resolve($options + $this->options);
@@ -127,8 +122,6 @@ class Client
         if (!$response instanceof Response || $response->getStatusCode() != 200) {
             throw new RequestException('Invalid response');
         }
-
-        return true;
     }
 
     /**
