@@ -147,10 +147,6 @@ class Client
         $messagesJson = [];
 
         foreach ($messages as $message) {
-            if (is_null($message->getFrom()) && is_null($options['sender'])) {
-                throw new InvalidSenderException('Please provide a valid SMS sender for your message');
-            }
-
             if (count($message->getTo()) == 0) {
                 throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
@@ -158,6 +154,8 @@ class Client
             if (is_null($message->getFrom())) {
                 $message->setFrom($options['sender']);
             }
+
+            $this->assertValidSender($message->getFrom());
 
             $messageJson = (object)[
                 'from' => $message->getFrom(),
@@ -175,6 +173,25 @@ class Client
         }
 
         return $messagesJson;
+    }
+
+    /**
+     * @param $sender
+     * @throws InvalidSenderException
+     */
+    public static function assertValidSender($sender)
+    {
+        if (!preg_match('#^[a-z0-9]+$#i', $sender)) {
+            throw new InvalidSenderException('The sender should only be composed of letters and numbers');
+        }
+
+        if (preg_match('#^[0-9]+$#', $sender) && strlen($sender) > 14) {
+            throw new InvalidSenderException('A numeric sender should not be longer than 14 numbers');
+        }
+
+        if (strlen($sender) > 11) {
+            throw new InvalidSenderException('An alphanumeric sender should not contain more than 11 characters');
+        }
     }
 
     /**

@@ -35,7 +35,13 @@ class Configuration implements ConfigurationInterface
                                     ->thenInvalid('Invalid unicode mode %s, choose one from ["'.implode('", "', Client::getUnicodeOptions()).'"]')
                                 ->end()
                             ->end()
-                            ->scalarNode('sender')->end()
+                            ->scalarNode('sender')
+                                ->validate()
+                                ->always(function ($sender) {
+                                    Client::assertValidSender($sender);
+                                })
+                                ->end()
+                            ->end()
                             ->integerNode('minimum_number_of_message_parts')->min(1)->end()
                             ->integerNode('maximum_number_of_message_parts')->end()
                         ->end()
