@@ -31,6 +31,11 @@ class Client
     protected $baseUrl = 'https://gw.cmtelecom.com/v1.0/message';
 
     /**
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
      * @var string
      */
     protected $productToken;
@@ -58,9 +63,11 @@ class Client
     /**
      * @param string $productToken
      * @param array|null $options
+     * @param bool $enabled
      */
-    public function __construct($productToken, array $options = [])
+    public function __construct($productToken, array $options = [], $enabled = true)
     {
+        $this->enabled = $enabled;
         $this->productToken = $productToken;
 
         $resolver = new OptionsResolver();
@@ -96,6 +103,10 @@ class Client
      */
     public function sendMessages(array $messages, array $options = [])
     {
+        if (!$this->enabled) {
+            return;
+        }
+
         $optionsResolver = new OptionsResolver();
         $optionsResolver->setDefaults($this->options);
         $options = $optionsResolver->resolve($options + $this->options);

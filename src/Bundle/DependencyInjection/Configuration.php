@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder
             ->root('endroid_cm_sms')
                 ->children()
+                    ->booleanNode('enabled')->defaultTrue()->end()
                     ->scalarNode('product_token')->isRequired()->end()
                     ->arrayNode('defaults')
                         ->children()

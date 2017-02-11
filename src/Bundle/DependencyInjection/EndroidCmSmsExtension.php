@@ -29,6 +29,6 @@ class EndroidCmSmsExtension extends Extension
         $loader->load('services.yml');
 
         $clientDefinition = $container->getDefinition('endroid.cm_sms.client');
-        $clientDefinition->setArguments($config);
+        $clientDefinition->setArguments([$config['product_token'], $config['options'], $config['enabled']]);
     }
 }
