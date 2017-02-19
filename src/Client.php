@@ -136,7 +136,7 @@ class Client
     }
 
     /**
-     * @param array $messages
+     * @param Message[] $messages
      * @param array $options
      * @return array
      * @throws InvalidSenderException
@@ -163,6 +163,7 @@ class Client
                 'body' => (object)[
                     'content' => $message->getBody()
                 ],
+                'reference' => $message->getId(),
                 'minimum_number_of_message_parts' => $options['minimum_number_of_message_parts'],
                 'maximum_number_of_message_parts' => $options['maximum_number_of_message_parts'],
             ];

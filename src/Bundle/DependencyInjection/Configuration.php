@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                                 ->validate()
                                 ->always(function ($sender) {
                                     Client::assertValidSender($sender);
+                                    return $sender;
                                 })
                                 ->end()
                             ->end()

@@ -1,0 +1,27 @@
+{% extends 'EndroidCmSmsBundle::layout.html.twig' %}
+
+{% block page_title %}
+    Messages and statuses
+{% endblock %}
+
+{% block page_content %}
+
+    <div id="application"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        let appConfig = {
+            loadPath: "/cm-sms/state/", // @todo: replace with generated path
+            testPath: "/cm-sms/send-test/", // @todo: replace with generated path
+        }
+    </script>
+
+    {#<script src="http://localhost:8080/builds/index.js"></script>#}
+    <script src="{{ asset('bundles/endroidcmsms/builds/index.js') }}"></script>
+
+{% endblock %}

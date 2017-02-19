@@ -10,10 +10,16 @@
 namespace Endroid\CmSms;
 
 use Endroid\CmsSms\Exceptions\InvalidSenderException;
+use Ramsey\Uuid\Uuid;
 use stdClass;
 
 class Message
 {
+    /**
+     * @var string
+     */
+    protected $id;
+
     /**
      * @var string
      */
@@ -35,11 +41,26 @@ class Message
     protected $options;
 
     /**
+     * @var bool
+     */
+    protected $sent;
+
+    /**
      * Message constructor.
      */
     public function __construct()
     {
+        $this->id = str_replace('-', '', Uuid::uuid4());
         $this->to = [];
+        $this->sent = false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -107,5 +128,32 @@ class Message
         if (!in_array($to, $this->to)) {
             $this->to[] = $to;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSent()
+    {
+        return $this->sent;
+    }
+
+    /**
+     * @param bool $sent
+     * @return $this
+     */
+    public function setSent($sent)
+    {
+        $this->sent = $sent;
+
+        return $this;
     }
 }

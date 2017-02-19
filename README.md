@@ -84,6 +84,8 @@ public function registerBundles()
 }
 ```
 
+### Configuration
+
 The default parameters can be overridden via the configuration.
 
 ```yaml
@@ -100,6 +102,28 @@ Now you can retrieve the client as follows.
 
 ```php
 $client = $this->get('endroid.cm_sms.client');
+```
+
+## Routing
+
+Add the following section to your routing to be able to visit the routes
+provided by this bundle.
+
+``` yml
+EndroidCmSmsBundle:
+    resource: "@EndroidCmSmsBundle/Controller/"
+    type:     annotation
+    prefix:   /cm-sms
+```
+
+## Development
+
+The production version makes use of built assets. Use the following commands to
+install dependencies and create a new build.
+
+``` bash
+npm install
+NODE_ENV=production node_modules/.bin/webpack
 ```
 
 ## Versioning
