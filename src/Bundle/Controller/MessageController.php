@@ -16,6 +16,7 @@ use Endroid\CmSms\Bundle\Repository\StatusRepository;
 use Endroid\CmSms\Client;
 use Endroid\CmSms\Exception\RequestException;
 use Endroid\CmSms\Message;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,9 +74,11 @@ class MessageController extends Controller
     {
         $data = $request->getMethod() === Request::METHOD_GET ? $request->query->all() : $request->request->all();
 
-        if (count($data) > 0) {
+        try {
             $status = Status::fromArray($data);
             $this->getStatusRepository()->save($status);
+        } catch (Exception $exception) {
+            // do nothing
         }
 
         return new Response();
