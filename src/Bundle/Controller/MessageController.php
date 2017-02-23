@@ -71,10 +71,12 @@ class MessageController extends Controller
      */
     public function updateStatusAction(Request $request)
     {
-        $data = $request->query->all();
+        $data = $request->getMethod() === Request::METHOD_GET ? $request->query->all() : $request->request->all();
 
-        $status = Status::fromArray($data);
-        $this->getStatusRepository()->save($status);
+        if (count($data) > 0) {
+            $status = Status::fromArray($data);
+            $this->getStatusRepository()->save($status);
+        }
 
         return new Response();
     }
