@@ -6,6 +6,15 @@ class MessageList extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.updatePhoneNumber = this.updatePhoneNumber.bind(this);
+
+        this.state = { phoneNumber: '' }
+    }
+
+    updatePhoneNumber(event) {
+        this.state.phoneNumber = event.target.value;
+        this.setState(this.state);
     }
 
     render() {
@@ -30,7 +39,8 @@ class MessageList extends React.Component {
             <div className="box">
                 <div className="box-body">
                     <div className="form-group">
-                        <input type="submit" onClick={() => this.props.sendTest()} value="Send test" />
+                        <input type="text" placeholder="Phone number" onKeyUp={this.updatePhoneNumber} />
+                        <input type="submit" onClick={() => this.props.sendTest(this.state.phoneNumber)} value="Send test" />
                         &nbsp;
                         <input type="submit" onClick={() => this.props.loadState()} value="Refresh" />
                     </div>

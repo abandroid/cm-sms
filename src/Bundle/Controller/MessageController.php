@@ -85,21 +85,23 @@ class MessageController extends Controller
     }
 
     /**
-     * @Route("/send-test/{number}")
+     * @Route("/send-test/{phoneNumber}")
      *
-     * @param int $number
+     * @param string $phoneNumber
      * @return Response|array
      */
-    public function testAction($number)
+    public function testAction($phoneNumber)
     {
         $message = new Message();
-        $message->addTo($number);
+        $message->addTo($phoneNumber);
         $message->setBody('Test message');
 
         $client = $this->getSmsClient();
 
         try {
+            $this->getMessageRepository()->save($message);
             $client->sendMessage($message);
+            $message->setSent(true);
             $this->getMessageRepository()->save($message);
         } catch (RequestException $exception) {
             // ...

@@ -57,6 +57,13 @@ class Message
     protected $options;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    protected $sent;
+
+    /**
      * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
      */
     protected $statuses;
@@ -81,6 +88,7 @@ class Message
         $message->sender = $domainMessage->getFrom();
         $message->recipients = $domainMessage->getTo();
         $message->options = $domainMessage->getOptions();
+        $message->sent = $domainMessage->isSent();
 
         return $message;
     }

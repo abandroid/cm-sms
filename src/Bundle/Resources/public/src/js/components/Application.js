@@ -21,10 +21,14 @@ class Application extends React.Component {
         });
     }
 
-    sendTest() {
-        console.log(this.props.testPath);
-        Request.get(this.props.testPath).then((response) => {
-            console.log('test message sent!');
+    sendTest(phoneNumber) {
+        if (!confirm('Are you sure?')) {
+            return;
+        }
+
+        let url = this.props.testPath.replace('0000000000', phoneNumber);
+        Request.get(url).then((response) => {
+            console.log('Test message sent to "' + phoneNumber + '"');
         });
     }
 
