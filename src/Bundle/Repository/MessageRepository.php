@@ -14,7 +14,7 @@ class MessageRepository extends EntityRepository
     public function save(DomainMessage $domainMessage)
     {
         $message = Message::fromDomainMessage($domainMessage);
-        $this->getEntityManager()->persist($message);
+        $this->getEntityManager()->merge($message);
         $this->getEntityManager()->flush();
     }
 }

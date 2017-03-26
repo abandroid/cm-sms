@@ -13,7 +13,7 @@ class StatusRepository extends EntityRepository
     public function save(Status $status)
     {
         $status->setMessage($this->getEntityManager()->getReference('EndroidCmSmsBundle:Message', $status->getData()['REFERENCE']));
-        $this->getEntityManager()->persist($status);
+        $this->getEntityManager()->merge($status);
         $this->getEntityManager()->flush();
     }
 }
