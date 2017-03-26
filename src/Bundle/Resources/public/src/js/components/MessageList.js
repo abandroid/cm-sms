@@ -45,6 +45,15 @@ class MessageList extends React.Component {
                         <input type="submit" onClick={() => this.props.loadState()} value="Refresh" />
                     </div>
                     <table className="table table-bordered" id="message-list">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Message</th>
+                                <th>Recipients</th>
+                                <th>Sent</th>
+                                <th>Delivered</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {messages}
                         </tbody>

@@ -133,6 +133,10 @@ class Client
         if (!$response instanceof Response || $response->getStatusCode() != 200) {
             throw new RequestException('Invalid response');
         }
+
+        foreach ($messages as $message) {
+            $message->setSent(true);
+        }
     }
 
     /**

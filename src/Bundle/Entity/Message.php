@@ -12,6 +12,7 @@ namespace Endroid\CmSms\Bundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Endroid\CmSms\Message as DomainMessage;
+use Endroid\CmSms\Status as DomainStatus;
 
 /**
  * @ORM\Entity
@@ -64,6 +65,13 @@ class Message
     protected $sent;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    protected $delivered;
+
+    /**
      * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
      */
     protected $statuses;
@@ -73,16 +81,25 @@ class Message
      */
     public function __construct()
     {
+        $this->delivered = false;
         $this->statuses = new ArrayCollection();
     }
 
     /**
-     * @param DomainMessage $domainMessage
-     * @return Message
+     * @return bool
      */
-    public static function fromDomainMessage(DomainMessage $domainMessage)
+    public function isDelivered()
     {
-        $message = new self();
+        return $this->delivered;
+    }
+
+    /**
+     * @param DomainMessage $domainMessage
+     * @return static
+     */
+    public static function fromDomain(DomainMessage $domainMessage)
+    {
+        $message = new static();
         $message->id = $domainMessage->getId();
         $message->body = $domainMessage->getBody();
         $message->sender = $domainMessage->getFrom();
@@ -91,5 +108,18 @@ class Message
         $message->sent = $domainMessage->isSent();
 
         return $message;
+    }
+
+    /**
+     * @param Status $status
+     */
+    public function addStatus(Status $status)
+    {
+        $status->setMessage($this);
+        $this->statuses->add($status);
+
+        if ($status->getCode() === DomainStatus::CODE_DELIVERED) {
+            $this->delivered = true;
+        }
     }
 }

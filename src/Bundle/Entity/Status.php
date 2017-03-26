@@ -10,10 +10,10 @@
 namespace Endroid\CmSms\Bundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Endroid\CmSms\Status as DomainStatus;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Endroid\CmSms\Bundle\Repository\StatusRepository")
  * @ORM\Table(name="cm_sms_status")
  */
 class Status
@@ -22,15 +22,17 @@ class Status
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="integer")
      *
-     * @var array
+     * @var int
      */
-    protected $data;
+    protected $code;
 
     /**
      * @ORM\ManyToOne(targetEntity="Endroid\CmSms\Bundle\Entity\Message", inversedBy="statuses", cascade={"persist"})
@@ -38,6 +40,13 @@ class Status
      * @var Message
      */
     protected $message;
+
+    /**
+     * @ORM\Column(type="array")
+     *
+     * @var array
+     */
+    protected $webHookData;
 
     /**
      * @return string
@@ -48,33 +57,11 @@ class Status
     }
 
     /**
-     * @param array $data
-     * @return $this
+     * @return int
      */
-    public function setData(array $data)
+    public function getCode()
     {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param Message $message
-     * @return $this
-     */
-    public function setMessage(Message $message)
-    {
-        $this->message = $message;
-
-        return $this;
+        return $this->code;
     }
 
     /**
@@ -86,13 +73,33 @@ class Status
     }
 
     /**
-     * @param array $data
+     * @param Message $message
      * @return $this
      */
-    public static function fromArray(array $data)
+    public function setMessage($message)
     {
-        $status = new self();
-        $status->setData($data);
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWebHookData()
+    {
+        return $this->getWebHookData();
+    }
+
+    /**
+     * @param DomainStatus $domainStatus
+     * @return static
+     */
+    public static function fromDomain(DomainStatus $domainStatus)
+    {
+        $status = new static();
+        $status->code = $domainStatus->getCode();
+        $status->webHookData = $domainStatus->getWebHookData();
 
         return $status;
     }

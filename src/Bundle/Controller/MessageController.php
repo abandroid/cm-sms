@@ -10,19 +10,21 @@
 namespace Endroid\CmSms\Bundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Endroid\CmSms\Bundle\Entity\Message;
 use Endroid\CmSms\Bundle\Entity\Status;
+use Endroid\CmSms\Bundle\Exception\InvalidStatusDataException;
 use Endroid\CmSms\Bundle\Repository\MessageRepository;
 use Endroid\CmSms\Bundle\Repository\StatusRepository;
 use Endroid\CmSms\Client;
 use Endroid\CmSms\Exception\RequestException;
-use Endroid\CmSms\Message;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Endroid\CmSms\Message as DomainMessage;
+use Endroid\CmSms\Status as DomainStatus;
 
 /**
  * @Route("/")
@@ -75,11 +77,20 @@ class MessageController extends Controller
         $data = $request->getMethod() === Request::METHOD_GET ? $request->query->all() : $request->request->all();
 
         try {
-            $status = Status::fromArray($data);
-            $this->getStatusRepository()->save($status);
-        } catch (Exception $exception) {
-            // do nothing
+            $status = DomainStatus::fromWebHookData($data);
+        } catch (InvalidStatusDataException $exception) {
+            return new Response();
         }
+
+        /** @var Message $message */
+        $message = $this->getMessageRepository()->find($status->getMessageId());
+
+        if (!$message instanceof Message) {
+            return new Response();
+        }
+
+        $message->addStatus(Status::fromDomain($status));
+        $this->getMessageRepository()->save($message);
 
         return new Response();
     }
@@ -92,20 +103,28 @@ class MessageController extends Controller
      */
     public function testAction($phoneNumber)
     {
-        $message = new Message();
+        $message = new DomainMessage();
         $message->addTo($phoneNumber);
         $message->setBody('Test message');
 
         $client = $this->getSmsClient();
 
-        try {
-            $this->getMessageRepository()->save($message);
-            $client->sendMessage($message);
-            $message->setSent(true);
-            $this->getMessageRepository()->save($message);
-        } catch (RequestException $exception) {
-            // ...
-        }
+        /**
+         * Make sure the entity is persisted before sending so status
+         * updates received between sending and persisting can be linked.
+         */
+        $this->getMessageRepository()->save(Message::fromDomain($message));
+
+        /**
+         * When sending the message its properties are altered: defaults
+         * are set and the sent status is set upon success.
+         */
+        $client->sendMessage($message);
+
+        /**
+         * Update the stored message so it reflects the domain message.
+         */
+        $this->getMessageRepository()->save(Message::fromDomain($message));
 
         return new JsonResponse($message);
     }

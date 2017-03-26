@@ -9,20 +9,22 @@ class Message extends React.Component {
 
     render() {
 
-        let style = {};
-        // if (this.props.isTarget) {
-        //     style = { backgroundColor: '#CFC' };
-        // } else if (this.props.isSource) {
-        //     style = { backgroundColor: '#FFC' };
-        // }
+        let message = this.props.message;
 
-        console.log(this.props.message);
+        let style = { };
+        if (message.delivered) {
+            style = { backgroundColor: '#CFC' };
+        } else if (message.sent) {
+            style = { backgroundColor: '#FFC' };
+        }
 
         return (
             <tr style={style} onClick={() => this.toggle()}>
-                <td>{this.props.message.id}</td>
-                <td>{this.props.message.body}</td>
-                <td>{JSON.stringify(this.props.message.statuses)}</td>
+                <td>{message.id}</td>
+                <td>{message.body}</td>
+                <td>{message.recipients}</td>
+                <td>{message.sent ? 'Yes' : 'No'}</td>
+                <td>{message.delivered ? 'Yes' : 'No'}</td>
             </tr>
         )
     }

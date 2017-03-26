@@ -122,12 +122,15 @@ class Message
 
     /**
      * @param string $to
+     * @return $this
      */
     public function addTo($to)
     {
         if (!in_array($to, $this->to)) {
             $this->to[] = $to;
         }
+
+        return $this;
     }
 
     /**

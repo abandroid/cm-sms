@@ -4,16 +4,14 @@ namespace Endroid\CmSms\Bundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Endroid\CmSms\Bundle\Entity\Message;
-use Endroid\CmSms\Message as DomainMessage;
 
 class MessageRepository extends EntityRepository
 {
     /**
-     * @param DomainMessage $domainMessage
+     * @param Message $message
      */
-    public function save(DomainMessage $domainMessage)
+    public function save(Message $message)
     {
-        $message = Message::fromDomainMessage($domainMessage);
         $this->getEntityManager()->merge($message);
         $this->getEntityManager()->flush();
     }
