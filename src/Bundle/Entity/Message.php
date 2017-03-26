@@ -118,7 +118,7 @@ class Message
         $status->setMessage($this);
         $this->statuses->add($status);
 
-        if ($status->getCode() === DomainStatus::CODE_DELIVERED) {
+        if ($status->getCode() == DomainStatus::CODE_DELIVERED) {
             $this->delivered = true;
         }
     }
