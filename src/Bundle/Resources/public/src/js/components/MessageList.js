@@ -21,8 +21,6 @@ class MessageList extends React.Component {
 
         let component = this;
 
-        console.log(this.props.messages);
-
         let messages = [];
         _.each(this.props.messages, function(message, index) {
             messages.push(
