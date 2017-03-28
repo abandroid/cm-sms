@@ -74,6 +74,7 @@ class MessageController extends Controller
      */
     public function updateStatusAction(Request $request)
     {
+        // Support both GET and POST
         $data = $request->getMethod() === Request::METHOD_GET ? $request->query->all() : $request->request->all();
 
         try {
@@ -151,13 +152,5 @@ class MessageController extends Controller
     protected function getMessageRepository()
     {
         return $this->getDoctrine()->getRepository('EndroidCmSmsBundle:Message');
-    }
-
-    /**
-     * @return StatusRepository
-     */
-    protected function getStatusRepository()
-    {
-        return $this->getDoctrine()->getRepository('EndroidCmSmsBundle:Status');
     }
 }

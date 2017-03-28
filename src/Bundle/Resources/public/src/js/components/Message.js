@@ -7,23 +7,30 @@ class Message extends React.Component {
     }
 
     render() {
-
         let message = this.props.message;
 
-        let style = { };
-        if (message.delivered) {
-            style = { backgroundColor: '#CFC' };
-        } else if (message.sent) {
-            style = { backgroundColor: '#FFC' };
+        let className = 'table-warning';
+        switch (message.translation_key) {
+            case 'delivered':
+                className = 'table-success';
+                break;
+            case 'unsent':
+            case 'rejected':
+            case 'failed':
+                className = 'table-danger';
+                break;
+            default:
+                break;
         }
 
         return (
-            <tr style={style} onClick={() => this.toggle()}>
-                <td>{message.id}</td>
-                <td>{message.body}</td>
-                <td>{message.recipients}</td>
-                <td>{message.sent ? 'Yes' : 'No'}</td>
-                <td>{message.statusLabel}</td>
+            <tr>
+                <td className={className}>{message.date_created}</td>
+                <td className={className}>{message.date_updated}</td>
+                <td className={className}>{message.id}</td>
+                <td className={className}>{message.body}</td>
+                <td className={className}>{message.recipients}</td>
+                <td className={className}>{message.translation_key}</td>
             </tr>
         )
     }

@@ -124,18 +124,18 @@ class Client
         $adapter = new GuzzleAdapter($client);
         $request = new Request('POST', $this->baseUrl, ['Content-Type' => 'application/json'], json_encode($json));
 
-        try {
-            $response = $adapter->sendRequest($request);
-        } catch (Exception $exception) {
-            throw new RequestException('Unable to perform API call: '.$exception->getMessage());
-        }
-
-        if (!$response instanceof Response || $response->getStatusCode() != 200) {
-            throw new RequestException('Invalid response');
-        }
+//        try {
+//            $response = $adapter->sendRequest($request);
+//        } catch (Exception $exception) {
+//            throw new RequestException('Unable to perform API call: '.$exception->getMessage());
+//        }
+//
+//        if (!$response instanceof Response || $response->getStatusCode() != 200) {
+//            throw new RequestException('Invalid response');
+//        }
 
         foreach ($messages as $message) {
-            $message->setSent(true);
+            $message->setStatusCode(StatusCode::SENT);
         }
     }
 

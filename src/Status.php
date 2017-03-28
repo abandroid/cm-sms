@@ -9,6 +9,7 @@
 
 namespace Endroid\CmSms;
 
+use DateTime;
 use Endroid\CmSms\Bundle\Exception\InvalidStatusDataException;
 
 class Status
@@ -17,6 +18,14 @@ class Status
      * @var array
      */
     protected $webHookData;
+
+    /**
+     * Creates a new instance.
+     */
+    public function __construct()
+    {
+        $this->dateCreated = new DateTime();
+    }
 
     /**
      * @param array $data
@@ -38,6 +47,14 @@ class Status
         $status->webHookData = $data;
 
         return $status;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
     }
 
     /**

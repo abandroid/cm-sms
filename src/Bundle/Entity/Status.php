@@ -9,6 +9,7 @@
 
 namespace Endroid\CmSms\Bundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Endroid\CmSms\Status as DomainStatus;
 
@@ -26,6 +27,13 @@ class Status
      * @var int
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var DateTime
+     */
+    protected $dateCreated;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,7 +84,7 @@ class Status
      * @param Message $message
      * @return $this
      */
-    public function setMessage($message)
+    public function setMessage(Message $message)
     {
         $this->message = $message;
 
@@ -98,6 +106,7 @@ class Status
     public static function fromDomain(DomainStatus $domainStatus)
     {
         $status = new static();
+        $status->dateCreated = $domainStatus->getDateCreated();
         $status->code = $domainStatus->getCode();
         $status->webHookData = $domainStatus->getWebHookData();
 

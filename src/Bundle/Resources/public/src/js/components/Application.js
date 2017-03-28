@@ -8,6 +8,7 @@ class Application extends React.Component {
         super(props);
 
         this.loadState = this.loadState.bind(this);
+        this.updatePhoneNumber = this.updatePhoneNumber.bind(this);
         this.sendTest = this.sendTest.bind(this);
 
         this.loadState();
@@ -16,9 +17,20 @@ class Application extends React.Component {
     }
 
     loadState() {
-        Request.get(this.props.loadPath).then((response) => {
-            this.setState(response.body);
-        });
+        Request
+            .get(this.props.loadPath)
+            .end((error, response) => {
+                if (error) {
+                    alert('Could not load SMS status data');
+                } else {
+                    this.setState(response.body);
+                }
+            });
+    }
+
+    updatePhoneNumber(event) {
+        this.state.phoneNumber = event.target.value;
+        this.setState(this.state);
     }
 
     sendTest(phoneNumber) {
@@ -26,10 +38,15 @@ class Application extends React.Component {
             return;
         }
 
-        let url = this.props.testPath.replace('0000000000', phoneNumber);
-        Request.get(url).then((response) => {
-            console.log('Test message sent to "' + phoneNumber + '"');
-        });
+        Request
+            .get(this.props.testPath.replace('0000000000', phoneNumber))
+            .end((error, response) => {
+                if (error) {
+                    alert('Could not send SMS message');
+                } else {
+                    alert('Test message sent to "' + phoneNumber + '"');
+                }
+            });
     }
 
     render() {
@@ -38,17 +55,16 @@ class Application extends React.Component {
                 <div className="col-md-12">
                     <div className="box">
                         <div className="box-body">
-                            <div className="form-group">
-                                <input type="text" placeholder="Phone number" onKeyUp={this.updatePhoneNumber} />
-                                <input type="submit" onClick={() => this.props.sendTest(this.state.phoneNumber)} value="Send test" />
-                                &nbsp;
-                                <input type="submit" onClick={() => this.props.loadState()} value="Refresh" />
-                            </div>
-                            <MessageList
-                                messages={this.state.messages}
-                                loadState={this.loadState}
-                                sendTest={this.sendTest}
-                            />
+                            <form className="form-inline">
+                                <div className="form-group">
+                                    <input className="form-control" type="text" placeholder="Phone number" onKeyUp={this.updatePhoneNumber} />
+                                    &nbsp;
+                                    <input className="btn btn-primary" type="submit" onClick={() => this.sendTest(this.state.phoneNumber)} value="Send test" />
+                                    &nbsp;
+                                    <input className="btn btn-success" type="submit" onClick={() => this.loadState()} value="Refresh" />
+                                </div>
+                            </form>
+                            <MessageList messages={this.state.messages} />
                         </div>
                     </div>
                 </div>

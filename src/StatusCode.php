@@ -9,6 +9,8 @@
 
 namespace Endroid\CmSms;
 
+use MyCLabs\Enum\Enum;
+
 class StatusCode extends Enum
 {
     /**
@@ -44,7 +46,7 @@ class StatusCode extends Enum
     /**
      * @return array
      */
-    public static function getAvailableOptions()
+    public static function getTranslationKeys()
     {
         return [
             self::UNSENT => 'unsent',

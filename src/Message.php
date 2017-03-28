@@ -9,9 +9,8 @@
 
 namespace Endroid\CmSms;
 
-use Endroid\CmsSms\Exceptions\InvalidSenderException;
+use DateTime;
 use Ramsey\Uuid\Uuid;
-use stdClass;
 
 class Message
 {
@@ -41,6 +40,16 @@ class Message
     protected $options;
 
     /**
+     * @var DateTime
+     */
+    protected $dateCreated;
+
+    /**
+     * @var DateTime
+     */
+    protected $dateUpdated;
+
+    /**
      * @var int
      */
     protected $statusCode;
@@ -51,6 +60,8 @@ class Message
     public function __construct()
     {
         $this->id = str_replace('-', '', Uuid::uuid4());
+        $this->dateCreated = new DateTime();
+        $this->dateUpdated = new DateTime();
         $this->to = [];
         $this->statusCode = StatusCode::UNSENT;
     }
@@ -158,5 +169,21 @@ class Message
         $this->statusCode = $statusCode;
 
         return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
     }
 }

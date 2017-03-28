@@ -9,11 +9,12 @@
 
 namespace Endroid\CmSms\Bundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Endroid\CmSms\Message as DomainMessage;
-use Endroid\CmSms\Status as DomainStatus;
 use Endroid\CmSms\StatusCode;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -59,11 +60,20 @@ class Message
     protected $options;
 
     /**
-     * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
+     * @ORM\Column(type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i'>")
      *
-     * @var ArrayCollection|Status[]
+     * @var DateTime
      */
-    protected $statuses;
+    protected $dateCreated;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i'>")
+     *
+     * @var DateTime
+     */
+    protected $dateUpdated;
 
     /**
      * @ORM\Column(type="integer")
@@ -73,22 +83,30 @@ class Message
     protected $statusCode;
 
     /**
+     * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
+     *
+     * @var ArrayCollection|Status[]
+     */
+    protected $statuses;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->statuses = new ArrayCollection();
-        $this->statusCode = StatusCode::UNSENT;
     }
 
     /**
+     * @Serializer\VirtualProperty()
+     *
      * @return string
      */
-    public function getStatusLabel()
+    public function getTranslationKey()
     {
-        $availableStatuses = StatusCode::getAvailableOptions();
+        $translationKeys = StatusCode::getTranslationKeys();
 
-        return $availableStatuses[$this->statusCode];
+        return $translationKeys[$this->statusCode];
     }
 
     /**
@@ -103,6 +121,8 @@ class Message
         $message->sender = $domainMessage->getFrom();
         $message->recipients = $domainMessage->getTo();
         $message->options = $domainMessage->getOptions();
+        $message->dateCreated = $domainMessage->getDateCreated();
+        $message->dateUpdated = $domainMessage->getDateUpdated();
         $message->statusCode = $domainMessage->getStatusCode();
 
         return $message;
@@ -123,5 +143,6 @@ class Message
         }
 
         $this->statusCode = $status->getCode();
+        $this->dateUpdated = new DateTime();
     }
 }
