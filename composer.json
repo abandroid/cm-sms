@@ -20,7 +20,7 @@
         "php-http/client-implementation": "^1.0",
         "php-http/httplug": "^1.0",
         "php-http/message-factory": "^1.0",
-        "php-http/discovery": "^1.0",
+        "php-http/discovery": "^0.9|^1.0",
         "jms/serializer": "^1.1",
         "ramsey/uuid": "^3.6",
         "symfony/options-resolver": "^2.3|^3.0"
