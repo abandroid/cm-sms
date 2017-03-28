@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Endroid\CmSms\Message as DomainMessage;
 use Endroid\CmSms\Status as DomainStatus;
+use Endroid\CmSms\StatusCode;
 
 /**
  * @ORM\Entity
@@ -58,39 +59,36 @@ class Message
     protected $options;
 
     /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $sent;
-
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $delivered;
-
-    /**
      * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
+     *
+     * @var ArrayCollection|Status[]
      */
     protected $statuses;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var int
+     */
+    protected $statusCode;
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->delivered = false;
         $this->statuses = new ArrayCollection();
+        $this->statusCode = StatusCode::UNSENT;
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isDelivered()
+    public function getStatusLabel()
     {
-        return $this->delivered;
+        $availableStatuses = StatusCode::getAvailableOptions();
+
+        return $availableStatuses[$this->statusCode];
     }
 
     /**
@@ -105,21 +103,25 @@ class Message
         $message->sender = $domainMessage->getFrom();
         $message->recipients = $domainMessage->getTo();
         $message->options = $domainMessage->getOptions();
-        $message->sent = $domainMessage->isSent();
+        $message->statusCode = $domainMessage->getStatusCode();
 
         return $message;
     }
 
     /**
      * @param Status $status
+     * @return $this
      */
     public function addStatus(Status $status)
     {
         $status->setMessage($this);
         $this->statuses->add($status);
 
-        if ($status->getCode() == DomainStatus::CODE_DELIVERED) {
-            $this->delivered = true;
+        // Never change the resulting status code when a delivery confirmation was sent
+        if ($this->statusCode == StatusCode::DELIVERED) {
+            return $this;
         }
+
+        $this->statusCode = $status->getCode();
     }
 }

@@ -36,11 +36,21 @@ class Application extends React.Component {
         return (
             <div className="row">
                 <div className="col-md-12">
-                    <MessageList
-                        messages={this.state.messages}
-                        loadState={this.loadState}
-                        sendTest={this.sendTest}
-                    />
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="form-group">
+                                <input type="text" placeholder="Phone number" onKeyUp={this.updatePhoneNumber} />
+                                <input type="submit" onClick={() => this.props.sendTest(this.state.phoneNumber)} value="Send test" />
+                                &nbsp;
+                                <input type="submit" onClick={() => this.props.loadState()} value="Refresh" />
+                            </div>
+                            <MessageList
+                                messages={this.state.messages}
+                                loadState={this.loadState}
+                                sendTest={this.sendTest}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

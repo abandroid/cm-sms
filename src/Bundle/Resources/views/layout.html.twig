@@ -20,33 +20,6 @@
             padding-bottom: 9px;
             border-bottom: 1px solid #eee;
         }
-        .sidebar {
-            position: fixed;
-            top: 51px;
-            bottom: 0;
-            left: 0;
-            z-index: 1000;
-            padding: 20px;
-            overflow-x: hidden;
-            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-            border-right: 1px solid #eee;
-        }
-        .sidebar {
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .sidebar .nav {
-            margin-bottom: 20px;
-        }
-        .sidebar .nav-item {
-            width: 100%;
-        }
-        .sidebar .nav-item + .nav-item {
-            margin-left: 0;
-        }
-        .sidebar .nav-link {
-            border-radius: 0;
-        }
     </style>
 
 </head>
@@ -60,11 +33,9 @@
     <a class="navbar-brand" href="#">CM SMS</a>
 </nav>
 
-<div id="content"></div>
-
 <div class="container-fluid">
     <div class="row">
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+        <main class="col-12 pt-3">
             <h1>{% block page_title %}{% endblock %}</h1>
             {% block page_content %}{% endblock %}
         </main>

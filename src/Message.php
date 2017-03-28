@@ -41,9 +41,9 @@ class Message
     protected $options;
 
     /**
-     * @var bool
+     * @var int
      */
-    protected $sent;
+    protected $statusCode;
 
     /**
      * Message constructor.
@@ -52,7 +52,7 @@ class Message
     {
         $this->id = str_replace('-', '', Uuid::uuid4());
         $this->to = [];
-        $this->sent = false;
+        $this->statusCode = StatusCode::UNSENT;
     }
 
     /**
@@ -142,20 +142,20 @@ class Message
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isSent()
+    public function getStatusCode()
     {
-        return $this->sent;
+        return $this->statusCode;
     }
 
     /**
-     * @param bool $sent
+     * @param int $statusCode
      * @return $this
      */
-    public function setSent($sent)
+    public function setStatusCode($statusCode)
     {
-        $this->sent = $sent;
+        $this->statusCode = $statusCode;
 
         return $this;
     }

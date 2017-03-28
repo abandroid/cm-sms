@@ -14,26 +14,6 @@ use Endroid\CmSms\Bundle\Exception\InvalidStatusDataException;
 class Status
 {
     /**
-     * Accepted by the operator.
-     */
-    const CODE_ACCEPTED = 0;
-
-    /**
-     * Rejected by CM or the operator.
-     */
-    const CODE_REJECTED = 1;
-
-    /**
-     * Delivered.
-     */
-    const CODE_DELIVERED = 2;
-
-    /**
-     * Failed and will not be delivered.
-     */
-    const CODE_FAILED = 3;
-
-    /**
      * @var array
      */
     protected $webHookData;

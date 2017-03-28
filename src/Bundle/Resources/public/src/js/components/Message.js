@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 
 class Message extends React.Component {
 
@@ -24,7 +23,7 @@ class Message extends React.Component {
                 <td>{message.body}</td>
                 <td>{message.recipients}</td>
                 <td>{message.sent ? 'Yes' : 'No'}</td>
-                <td>{message.delivered ? 'Yes' : 'No'}</td>
+                <td>{message.statusLabel}</td>
             </tr>
         )
     }
