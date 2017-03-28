@@ -13,9 +13,9 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.4",
         "myclabs/php-enum": "^1.5",
-        "php-http/guzzle6-adapter": "^1.1",
+        "guzzlehttp/guzzle": "^5.0",
         "symfony/options-resolver": "^2.3|^3.0"
     },
     "require-dev": {
