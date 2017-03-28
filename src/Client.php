@@ -13,8 +13,10 @@ use Endroid\CmSms\Exception\InvalidRecipientException;
 use Endroid\CmSms\Exception\InvalidSenderException;
 use Endroid\CmSms\Exception\RequestException;
 use Exception;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Response;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Client
@@ -118,10 +120,12 @@ class Client
             ]
         ];
 
-        $client = new GuzzleClient();
+        $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
 
         try {
-            $response = $client->post($this->baseUrl, ['json' => $json]);
+            $response = $client->post($this->baseUrl, [
+                'content-type' => 'application/json'
+            ], json_encode($json));
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
