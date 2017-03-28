@@ -13,7 +13,7 @@ class Application extends React.Component {
 
         this.loadState();
 
-        this.state = { messages: [] };
+        this.state = { messages: [], phoneNumber: '' };
     }
 
     loadState() {
@@ -59,9 +59,9 @@ class Application extends React.Component {
                                 <div className="form-group">
                                     <input className="form-control" type="text" placeholder="Phone number" onKeyUp={this.updatePhoneNumber} />
                                     &nbsp;
-                                    <input className="btn btn-primary" type="submit" onClick={() => this.sendTest(this.state.phoneNumber)} value="Send test" />
+                                    <button type="button" className="btn btn-primary" onClick={() => this.sendTest(this.state.phoneNumber)}>Send test</button>
                                     &nbsp;
-                                    <input className="btn btn-success" type="submit" onClick={() => this.loadState()} value="Refresh" />
+                                    <button type="button" className="btn btn-success" onClick={() => this.loadState()}>Refresh</button>
                                 </div>
                             </form>
                             <MessageList messages={this.state.messages} />
