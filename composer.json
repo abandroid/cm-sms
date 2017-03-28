@@ -16,6 +16,7 @@
         "php": ">=5.4",
         "myclabs/php-enum": "^1.5",
         "guzzlehttp/guzzle": "^5.0",
+        "jms/serializer": "^1.1",
         "symfony/options-resolver": "^2.3|^3.0"
     },
     "require-dev": {
