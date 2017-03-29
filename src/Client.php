@@ -9,6 +9,9 @@
 
 namespace Endroid\CmSms;
 
+use Buzz\Client\Curl;
+use Buzz\Message\Request;
+use Buzz\Message\RequestInterface;
 use Endroid\CmSms\Exception\InvalidRecipientException;
 use Endroid\CmSms\Exception\InvalidSenderException;
 use Endroid\CmSms\Exception\RequestException;
@@ -121,15 +124,15 @@ class Client
         ];
 
         try {
-            if (PHP_VERSION == '5.4.45') {
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post($this->baseUrl, ['json' => $json]);
-            } else {
-                $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
-                $response = $client->post($this->baseUrl, [
-                    'content-type' => 'application/json'
-                ], json_encode($json));
-            }
+            $client = new Curl();
+            $client->setVerifyPeer(false);
+            $client->setVerifyHost(false);
+            $request = new Request(RequestInterface::METHOD_POST);
+            $request->fromUrl($this->baseUrl);
+            $request->addHeader('Content-Type: application/json');
+            $request->setContent(json_encode($json));
+            $response = new \Buzz\Message\Response();
+            $client->send($request, $response);
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
