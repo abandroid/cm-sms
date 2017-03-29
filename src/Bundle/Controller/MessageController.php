@@ -14,9 +14,7 @@ use Endroid\CmSms\Bundle\Entity\Message;
 use Endroid\CmSms\Bundle\Entity\Status;
 use Endroid\CmSms\Bundle\Exception\InvalidStatusDataException;
 use Endroid\CmSms\Bundle\Repository\MessageRepository;
-use Endroid\CmSms\Bundle\Repository\StatusRepository;
 use Endroid\CmSms\Client;
-use Endroid\CmSms\Exception\RequestException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Endroid\CmSms\Message as DomainMessage;
 use Endroid\CmSms\Status as DomainStatus;
+use JMS\Serializer\SerializerBuilder;
 
 /**
  * @Route("/")
@@ -49,7 +48,6 @@ class MessageController extends Controller
 
     /**
      * @Route("/state")
-     * @Template()
      *
      * @return Response
      */
@@ -57,7 +55,7 @@ class MessageController extends Controller
     {
         $messages = $this->getMessageRepository()->findAll();
 
-        $serializer = $this->get('jms_serializer');
+        $serializer = SerializerBuilder::create()->build();
 
         return new Response(
             $serializer->serialize(['messages' => $messages], 'json'),
