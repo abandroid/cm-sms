@@ -120,17 +120,21 @@ class Client
             ]
         ];
 
-        $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
-
         try {
-            $response = $client->post($this->baseUrl, [
-                'content-type' => 'application/json'
-            ], json_encode($json));
+            if (PHP_VERSION == '5.4.45') {
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post($this->baseUrl, ['json' => $json]);
+            } else {
+                $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
+                $response = $client->post($this->baseUrl, [
+                    'content-type' => 'application/json'
+                ], json_encode($json));
+            }
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if (!$response instanceof Response || $response->getStatusCode() != 200) {
+        if (!$response || $response->getStatusCode() != 200) {
             throw new RequestException('Invalid response');
         }
 
