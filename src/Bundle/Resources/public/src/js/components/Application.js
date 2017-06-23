@@ -64,6 +64,7 @@ class Application extends React.Component {
                                     <button type="button" className="btn btn-success" onClick={() => this.loadState()}>Refresh</button>
                                 </div>
                             </form>
+                            <br />
                             <MessageList messages={this.state.messages} />
                         </div>
                     </div>
