@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\Entity;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +18,7 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Endroid\CmSms\Bundle\Repository\MessageRepository")
+ * @ORM\Entity(repositoryClass="Endroid\CmSms\Bundle\CmSmsBundle\Repository\MessageRepository")
  * @ORM\Table(name="cm_sms_message")
  */
 class Message
@@ -83,7 +83,7 @@ class Message
     protected $statusCode;
 
     /**
-     * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\Entity\Status", mappedBy="message", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Endroid\CmSms\Bundle\CmSmsBundle\Entity\Status", mappedBy="message", cascade={"persist"})
      *
      * @var ArrayCollection|Status[]
      */

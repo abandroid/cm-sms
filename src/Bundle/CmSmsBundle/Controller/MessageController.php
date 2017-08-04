@@ -7,13 +7,13 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\Controller;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Endroid\CmSms\Bundle\Entity\Message;
-use Endroid\CmSms\Bundle\Entity\Status;
-use Endroid\CmSms\Bundle\Exception\InvalidStatusDataException;
-use Endroid\CmSms\Bundle\Repository\MessageRepository;
+use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Message;
+use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Status;
+use Endroid\CmSms\Bundle\CmSmsBundle\Exception\InvalidStatusDataException;
+use Endroid\CmSms\Bundle\CmSmsBundle\Repository\MessageRepository;
 use Endroid\CmSms\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,7 +31,7 @@ use JMS\Serializer\SerializerBuilder;
 class MessageController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="endroid_cmsms_message_index")
      * @Template()
      *
      * @return array
@@ -47,7 +47,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Route("/state")
+     * @Route("/state", name="endroid_cmsms_message_state")
      *
      * @return Response
      */
@@ -65,7 +65,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Route("/update-status")
+     * @Route("/update-status", name="endroid_cmsms_message_updatestatus")
      *
      * @param Request $request
      * @return Response
@@ -95,7 +95,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Route("/send-test/{phoneNumber}")
+     * @Route("/send-test/{phoneNumber}", name="endroid_cmsms_message_test")
      *
      * @param string $phoneNumber
      * @return Response|array

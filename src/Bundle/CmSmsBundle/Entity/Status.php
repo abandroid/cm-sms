@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\Entity;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -43,7 +43,7 @@ class Status
     protected $code;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Endroid\CmSms\Bundle\Entity\Message", inversedBy="statuses", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Endroid\CmSms\Bundle\CmSmsBundle\Entity\Message", inversedBy="statuses", cascade={"persist"})
      *
      * @var Message
      */

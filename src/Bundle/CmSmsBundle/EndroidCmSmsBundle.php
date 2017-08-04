@@ -7,10 +7,10 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\Exception;
+namespace Endroid\CmSms\Bundle\CmSmsBundle;
 
-use Exception;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class InvalidStatusDataException extends Exception
+class EndroidCmSmsBundle extends Bundle
 {
 }

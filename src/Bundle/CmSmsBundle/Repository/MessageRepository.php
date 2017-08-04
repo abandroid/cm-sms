@@ -1,9 +1,9 @@
 <?php
 
-namespace Endroid\CmSms\Bundle\Repository;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Endroid\CmSms\Bundle\Entity\Message;
+use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Message;
 
 class MessageRepository extends EntityRepository
 {

@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\DependencyInjection;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\DependencyInjection;
 
 use Endroid\CmSms\Client;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -25,7 +25,10 @@ class Configuration implements ConfigurationInterface
         $treeBuilder
             ->root('endroid_cm_sms')
                 ->children()
-                    ->booleanNode('enabled')->defaultTrue()->end()
+                    ->booleanNode('disable_delivery')->defaultFalse()->end()
+                    ->arrayNode('delivery_phone_numbers')
+                        ->prototype('scalar')->end()
+                    ->end()
                     ->scalarNode('product_token')->isRequired()->end()
                     ->arrayNode('defaults')
                         ->children()

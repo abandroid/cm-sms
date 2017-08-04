@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Endroid\CmSms\Bundle\DependencyInjection;
+namespace Endroid\CmSms\Bundle\CmSmsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -29,6 +29,6 @@ class EndroidCmSmsExtension extends Extension
         $loader->load('services.yml');
 
         $clientDefinition = $container->getDefinition('endroid.cm_sms.client');
-        $clientDefinition->setArguments([$config['product_token'], $config['defaults'], $config['enabled']]);
+        $clientDefinition->setArguments([$config['product_token'], $config['defaults'], $config['delivery_phone_numbers'], $config['disable_delivery']]);
     }
 }

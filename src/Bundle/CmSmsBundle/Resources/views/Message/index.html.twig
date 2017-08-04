@@ -1,0 +1,26 @@
+{% extends 'EndroidCmSmsBundle::layout.html.twig' %}
+
+{% block page_title %}
+    Status Dashboard
+{% endblock %}
+
+{% block page_content %}
+
+    <div id="application"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        let appConfig = {
+            loadPath: "{{ path('endroid_cmsms_message_state') }}",
+            testPath: "{{ path('endroid_cmsms_message_test', { phoneNumber: '0000000000' }) }}",
+        }
+    </script>
+
+    <script src="{{ manifest_asset('build/index.js', 'bundles/endroidcmsms/build/manifest.json') }}"></script>
+
+{% endblock %}

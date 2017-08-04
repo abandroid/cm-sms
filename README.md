@@ -79,7 +79,7 @@ public function registerBundles()
 {
     $bundles = [
         // ...
-        new Endroid\CmSms\Bundle\EndroidCmSmsBundle(),
+        new Endroid\CmSms\Bundle\CmSmsBundle\EndroidCmSmsBundle(),
     ];
 }
 ```
@@ -90,6 +90,8 @@ The default parameters can be overridden via the configuration.
 
 ```yaml
 endroid_cm_sms:
+    disable_delivery: false
+    delivery_phone_numbers: []
     product_token: '00000000-0000-0000-0000-000000000000'
     defaults:
         sender: 'Endroid'

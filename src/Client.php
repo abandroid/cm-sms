@@ -33,7 +33,12 @@ class Client
     /**
      * @var bool
      */
-    protected $enabled;
+    protected $disableDelivery;
+
+    /**
+     * @var array
+     */
+    protected $deliveryPhoneNumbers;
 
     /**
      * @var string
@@ -63,11 +68,13 @@ class Client
     /**
      * @param string $productToken
      * @param array|null $options
-     * @param bool $enabled
+     * @param array $deliveryPhoneNumbers
+     * @param bool $disableDelivery
      */
-    public function __construct($productToken, array $options = [], $enabled = true)
+    public function __construct($productToken, array $options = [], $deliveryPhoneNumbers = [], $disableDelivery = false)
     {
-        $this->enabled = $enabled;
+        $this->disableDelivery = $disableDelivery;
+        $this->deliveryPhoneNumbers = $deliveryPhoneNumbers;
         $this->productToken = $productToken;
 
         $resolver = new OptionsResolver();
@@ -103,8 +110,14 @@ class Client
      */
     public function sendMessages(array $messages, array $options = [])
     {
-        if (!$this->enabled) {
+        if ($this->disableDelivery) {
             return;
+        }
+
+        if (count($this->deliveryPhoneNumbers) > 0) {
+            foreach ($messages as $message) {
+                $message->setTo($this->deliveryPhoneNumbers);
+            }
         }
 
         $optionsResolver = new OptionsResolver();
