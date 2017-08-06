@@ -3,7 +3,7 @@
     "description": "Endroid CM SMS",
     "keywords": ["endroid", "cm", "sms", "bundle", "symfony"],
     "homepage": "https://github.com/endroid/CmSms",
-    "type": "library",
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
