@@ -26,32 +26,16 @@ use Endroid\CmSms\Status as DomainStatus;
 use JMS\Serializer\SerializerBuilder;
 
 /**
- * @Route("/")
+ * @Route("/message")
  */
 class MessageController extends Controller
 {
     /**
-     * @Route("/", name="endroid_cmsms_message_index")
-     * @Template()
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-        // Disable web profiler when using React
-        if ($this->has('profiler')) {
-            $this->get('profiler')->disable();
-        }
-
-        return [];
-    }
-
-    /**
-     * @Route("/state", name="endroid_cmsms_message_state")
+     * @Route("/", name="endroid_cm_sms_message_index")
      *
      * @return Response
      */
-    public function stateAction()
+    public function indexAction()
     {
         $messages = $this->getMessageRepository()->findAll();
 
@@ -65,42 +49,12 @@ class MessageController extends Controller
     }
 
     /**
-     * @Route("/update-status", name="endroid_cmsms_message_updatestatus")
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function updateStatusAction(Request $request)
-    {
-        // Support both GET and POST
-        $data = $request->getMethod() === Request::METHOD_GET ? $request->query->all() : $request->request->all();
-
-        try {
-            $status = DomainStatus::fromWebHookData($data);
-        } catch (InvalidStatusDataException $exception) {
-            return new Response();
-        }
-
-        /** @var Message $message */
-        $message = $this->getMessageRepository()->find($status->getMessageId());
-
-        if (!$message instanceof Message) {
-            return new Response();
-        }
-
-        $message->addStatus(Status::fromDomain($status));
-        $this->getMessageRepository()->save($message);
-
-        return new Response();
-    }
-
-    /**
-     * @Route("/send-test/{phoneNumber}", name="endroid_cmsms_message_test")
+     * @Route("/send/{phoneNumber}", name="endroid_cm_sms_message_send")
      *
      * @param string $phoneNumber
      * @return Response|array
      */
-    public function testAction($phoneNumber)
+    public function sendAction($phoneNumber)
     {
         $message = new DomainMessage();
         $message->addTo($phoneNumber);
@@ -134,14 +88,6 @@ class MessageController extends Controller
     protected function getSmsClient()
     {
         return $this->get('endroid.cm_sms.client');
-    }
-
-    /**
-     * @return EntityManager
-     */
-    protected function getEntityManager()
-    {
-        return $this->getDoctrine()->getManager();
     }
 
     /**

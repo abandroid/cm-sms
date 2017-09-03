@@ -1,3 +1,11 @@
 {
-  "/build/index.js": "/bundles/endroidcmsms/build/index.a410138e51e131bc8ecc.js"
+  "/build/base.css": "/bundles/endroidcmsms/build/base.166fb46d68d8d1597ffe20ca231bbfb4.css",
+  "/build/base.js": "/bundles/endroidcmsms/build/base.9253ae03c23e75bbe058.js",
+  "/build/dashboard.js": "/bundles/endroidcmsms/build/dashboard.61e36ec2f578b7a3cf78.js",
+  "/build/fonts/fontawesome-webfont.eot": "/bundles/endroidcmsms/build/fonts/fontawesome-webfont.674f50d287a8c48dc19ba404d20fe713.eot",
+  "/build/fonts/fontawesome-webfont.ttf?v=4.7.0": "/bundles/endroidcmsms/build/fonts/fontawesome-webfont.b06871f281fee6b241d60582ae9369b9.ttf",
+  "/build/fonts/fontawesome-webfont.woff2?v=4.7.0": "/bundles/endroidcmsms/build/fonts/fontawesome-webfont.af7ae505a9eed503f8b8e6982036873e.woff2",
+  "/build/fonts/fontawesome-webfont.woff?v=4.7.0": "/bundles/endroidcmsms/build/fonts/fontawesome-webfont.fee66e712a8a08eef5805a46892932ad.woff",
+  "/build/images/fontawesome-webfont.svg?v=4.7.0": "/bundles/endroidcmsms/build/images/fontawesome-webfont.912ec66d7572ff821749319396470bde.svg",
+  "/build/manifest.js": "/bundles/endroidcmsms/build/manifest.d41d8cd98f00b204e980.js"
 }
