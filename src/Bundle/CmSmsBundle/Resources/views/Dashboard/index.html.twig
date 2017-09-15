@@ -1,5 +1,10 @@
 {% extends '@EndroidCmSms/layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ preload(asset('/build/dashboard.css', 'endroid_cm_sms')) }}">
+{% endblock %}
+
 {% block content %}
     <h1>CM SMS Dashboard</h1>
     <div id="application"></div>
