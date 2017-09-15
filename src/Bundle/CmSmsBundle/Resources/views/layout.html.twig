@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#224470">
         <title>{% block title %}CM SMS{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ preload(asset('/build/base.css', 'endroid_cm_sms')) }}">
@@ -13,7 +12,7 @@
         {% block body %}
             <div class="container-fluid">
                 <div class="row">
-                    <main class="col-sm-9  col-md-10 pt-3" role="main">
+                    <main class="col-sm-12 col-md-12 pt-3" role="main">
                         {% block content %}
 
                         {% endblock %}
