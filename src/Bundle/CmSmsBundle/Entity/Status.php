@@ -82,6 +82,7 @@ class Status
 
     /**
      * @param Message $message
+     *
      * @return $this
      */
     public function setMessage(Message $message)
@@ -101,6 +102,7 @@ class Status
 
     /**
      * @param DomainStatus $domainStatus
+     *
      * @return static
      */
     public static function fromDomain(DomainStatus $domainStatus)

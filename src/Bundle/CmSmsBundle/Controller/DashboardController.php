@@ -9,21 +9,9 @@
 
 namespace Endroid\CmSms\Bundle\CmSmsBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Message;
-use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Status;
-use Endroid\CmSms\Bundle\CmSmsBundle\Exception\InvalidStatusDataException;
-use Endroid\CmSms\Bundle\CmSmsBundle\Repository\MessageRepository;
-use Endroid\CmSms\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Endroid\CmSms\Message as DomainMessage;
-use Endroid\CmSms\Status as DomainStatus;
-use JMS\Serializer\SerializerBuilder;
 
 /**
  * @Route("/")

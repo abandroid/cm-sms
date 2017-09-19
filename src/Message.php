@@ -84,6 +84,7 @@ class Message
 
     /**
      * @param string $body
+     *
      * @return $this
      */
     public function setBody($body)
@@ -103,6 +104,7 @@ class Message
 
     /**
      * @param string $from
+     *
      * @return $this
      */
     public function setFrom($from)
@@ -122,6 +124,7 @@ class Message
 
     /**
      * @param array $to
+     *
      * @return $this
      */
     public function setTo(array $to)
@@ -133,6 +136,7 @@ class Message
 
     /**
      * @param string $to
+     *
      * @return $this
      */
     public function addTo($to)
@@ -162,6 +166,7 @@ class Message
 
     /**
      * @param int $statusCode
+     *
      * @return $this
      */
     public function setStatusCode($statusCode)

@@ -66,10 +66,10 @@ class Client
     protected $optionsResolver;
 
     /**
-     * @param string $productToken
+     * @param string     $productToken
      * @param array|null $options
-     * @param array $deliveryPhoneNumbers
-     * @param bool $disableDelivery
+     * @param array      $deliveryPhoneNumbers
+     * @param bool       $disableDelivery
      */
     public function __construct($productToken, array $options = [], $deliveryPhoneNumbers = [], $disableDelivery = false)
     {
@@ -95,7 +95,7 @@ class Client
     }
 
     /**
-     * @param Message $message
+     * @param Message    $message
      * @param array|null $options
      */
     public function sendMessage(Message $message, array $options = [])
@@ -104,8 +104,9 @@ class Client
     }
 
     /**
-     * @param Message[] $messages
+     * @param Message[]  $messages
      * @param array|null $options
+     *
      * @throws RequestException
      */
     public function sendMessages(array $messages, array $options = [])
@@ -127,23 +128,23 @@ class Client
         $json = (object) [
             'messages' => (object) [
                 'authentication' => (object) [
-                    'producttoken' => $this->productToken
+                    'producttoken' => $this->productToken,
                 ],
-                'msg' => $this->createMessagesJson($messages, $options)
-            ]
+                'msg' => $this->createMessagesJson($messages, $options),
+            ],
         ];
 
         $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
 
         try {
             $response = $client->post($this->baseUrl, [
-                'content-type' => 'application/json'
+                'content-type' => 'application/json',
             ], json_encode($json));
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if (!$response instanceof Response || $response->getStatusCode() != 200) {
+        if (!$response instanceof Response || 200 != $response->getStatusCode()) {
             throw new RequestException('Invalid response');
         }
 
@@ -154,8 +155,10 @@ class Client
 
     /**
      * @param Message[] $messages
-     * @param array $options
+     * @param array     $options
+     *
      * @return array
+     *
      * @throws InvalidSenderException
      * @throws InvalidRecipientException
      */
@@ -164,7 +167,7 @@ class Client
         $messagesJson = [];
 
         foreach ($messages as $message) {
-            if (count($message->getTo()) == 0) {
+            if (0 == count($message->getTo())) {
                 throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
 
@@ -174,11 +177,11 @@ class Client
 
             $this->assertValidSender($message->getFrom());
 
-            $messageJson = (object)[
+            $messageJson = (object) [
                 'from' => $message->getFrom(),
                 'to' => $this->createRecipientsJson($message->getTo()),
-                'body' => (object)[
-                    'content' => $message->getBody()
+                'body' => (object) [
+                    'content' => $message->getBody(),
                 ],
                 'reference' => $message->getId(),
                 'minimum_number_of_message_parts' => $options['minimum_number_of_message_parts'],
@@ -195,6 +198,7 @@ class Client
 
     /**
      * @param $sender
+     *
      * @throws InvalidSenderException
      */
     public static function assertValidSender($sender)
@@ -214,6 +218,7 @@ class Client
 
     /**
      * @param array $recipients
+     *
      * @return array
      */
     protected function createRecipientsJson(array $recipients)
@@ -222,7 +227,7 @@ class Client
 
         foreach ($recipients as $recipient) {
             $recipientsJson[] = (object) [
-                'number' => $recipient
+                'number' => $recipient,
             ];
         }
 
@@ -232,6 +237,7 @@ class Client
     /**
      * @param object $messageJson
      * @param string $unicode
+     *
      * @return object
      */
     protected function incorporateUnicodeOption($messageJson, $unicode)

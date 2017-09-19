@@ -9,20 +9,15 @@
 
 namespace Endroid\CmSms\Bundle\CmSmsBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Message;
 use Endroid\CmSms\Bundle\CmSmsBundle\Entity\Status;
-use Endroid\CmSms\Bundle\CmSmsBundle\Exception\InvalidStatusDataException;
 use Endroid\CmSms\Bundle\CmSmsBundle\Repository\MessageRepository;
 use Endroid\CmSms\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Endroid\CmSms\Message as DomainMessage;
-use Endroid\CmSms\Status as DomainStatus;
 use JMS\Serializer\SerializerBuilder;
 
 /**
@@ -52,6 +47,7 @@ class MessageController extends Controller
      * @Route("/send/{phoneNumber}", name="endroid_cm_sms_message_send")
      *
      * @param string $phoneNumber
+     *
      * @return Response|array
      */
     public function sendAction($phoneNumber)
@@ -62,19 +58,19 @@ class MessageController extends Controller
 
         $client = $this->getSmsClient();
 
-        /**
+        /*
          * Make sure the entity is persisted before sending so status
          * updates received between sending and persisting can be linked.
          */
         $this->getMessageRepository()->save(Message::fromDomain($message));
 
-        /**
+        /*
          * When sending the message its properties are altered: defaults
          * are set and the sent status is set upon success.
          */
         $client->sendMessage($message);
 
-        /**
+        /*
          * Update the stored message so it reflects the domain message.
          */
         $this->getMessageRepository()->save(Message::fromDomain($message));

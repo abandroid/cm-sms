@@ -34,6 +34,7 @@ class Status
 
     /**
      * @param array $data
+     *
      * @return static
      *
      * @throws InvalidStatusDataException

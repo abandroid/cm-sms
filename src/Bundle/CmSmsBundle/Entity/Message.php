@@ -111,6 +111,7 @@ class Message
 
     /**
      * @param DomainMessage $domainMessage
+     *
      * @return static
      */
     public static function fromDomain(DomainMessage $domainMessage)
@@ -130,6 +131,7 @@ class Message
 
     /**
      * @param Status $status
+     *
      * @return $this
      */
     public function addStatus(Status $status)
@@ -138,7 +140,7 @@ class Message
         $this->statuses->add($status);
 
         // Never change the resulting status code when a delivery confirmation was sent
-        if ($this->statusCode == StatusCode::DELIVERED) {
+        if (StatusCode::DELIVERED == $this->statusCode) {
             return $this;
         }
 

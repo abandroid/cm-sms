@@ -43,10 +43,10 @@ class EndroidCmSmsExtension extends Extension implements PrependExtensionInterfa
             'assets' => [
                 'packages' => [
                     'endroid_cm_sms' => [
-                        'json_manifest_path' => '%kernel.project_dir%/public/bundles/endroidcmsms/build/manifest.json'
-                    ]
-                ]
-            ]
+                        'json_manifest_path' => '%kernel.project_dir%/public/bundles/endroidcmsms/build/manifest.json',
+                    ],
+                ],
+            ],
         ]);
     }
 }
