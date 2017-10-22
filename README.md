@@ -1,5 +1,5 @@
-CM SMS
-======
+Endroid CM SMS
+==============
 
 *By [endroid](http://endroid.nl/)*
 
@@ -24,6 +24,10 @@ provided by Composer. Otherwise, your application won't be able to find the
 classes of this library.
 
 Of course you can also download the library and build your own autoloader.
+
+### Symfony integration
+
+You can easily integrate the library in Symfony with the [EndroidCmSmsBundle](https://github.com/endroid/EndroidCmSmsBundle).
 
 ## Usage
 
@@ -68,66 +72,6 @@ The following sending options are available.
 * minimum_number_of_message_parts: min when splitting up long messages
 * maximum_number_of_message_parts: max when splitting up long messages
 
-## Symfony integration
-
-Register the Symfony bundle in the kernel.
-
-```php
-// app/AppKernel.php
-
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new Endroid\CmSms\Bundle\CmSmsBundle\EndroidCmSmsBundle(),
-    ];
-}
-```
-
-### Configuration
-
-The default parameters can be overridden via the configuration.
-
-```yaml
-endroid_cm_sms:
-    disable_delivery: false
-    delivery_phone_numbers: []
-    product_token: '00000000-0000-0000-0000-000000000000'
-    defaults:
-        sender: 'Endroid'
-        unicode: 'auto'
-        minimum_number_of_message_parts: 1
-        maximum_number_of_message_parts: 3
-```
-
-Now you can retrieve the client as follows.
-
-```php
-$client = $this->get('endroid.cm_sms.client');
-```
-
-## Routing
-
-Add the following section to your routing to be able to visit the routes
-provided by this bundle.
-
-``` yml
-EndroidCmSmsBundle:
-    resource: "@EndroidCmSmsBundle/Controller/"
-    type:     annotation
-    prefix:   /cm-sms
-```
-
-## Development
-
-The production version makes use of built assets. Use the following commands to
-install dependencies and create a new build.
-
-``` bash
-npm install
-NODE_ENV=production node_modules/.bin/webpack
-```
-
 ## Versioning
 
 Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatibility
@@ -136,5 +80,4 @@ Lock your dependencies for production and test your code when upgrading.
 
 ## License
 
-This bundle is under the MIT license. For the full copyright and license
-information please view the LICENSE file that was distributed with this source code.
+This source code is subject to the MIT license bundled in the file LICENSE.
