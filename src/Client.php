@@ -19,59 +19,25 @@ use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Client
+final class Client
 {
     const UNICODE_AUTO = 'auto';
     const UNICODE_FORCE = 'force';
     const UNICODE_NEVER = 'never';
 
-    /**
-     * @var string
-     */
-    protected $baseUrl = 'https://gw.cmtelecom.com/v1.0/message';
-
-    /**
-     * @var bool
-     */
-    protected $disableDelivery;
-
-    /**
-     * @var array
-     */
-    protected $deliveryPhoneNumbers;
-
-    /**
-     * @var string
-     */
-    protected $productToken;
-
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * @var array
-     */
-    protected $defaultOptions = [
+    private $baseUrl = 'https://gw.cmtelecom.com/v1.0/message';
+    private $disableDelivery;
+    private $deliveryPhoneNumbers;
+    private $productToken;
+    private $options;
+    private $defaultOptions = [
         'sender' => null,
         'unicode' => self::UNICODE_AUTO,
         'minimum_number_of_message_parts' => 1,
         'maximum_number_of_message_parts' => 1,
     ];
 
-    /**
-     * @var OptionsResolver
-     */
-    protected $optionsResolver;
-
-    /**
-     * @param string     $productToken
-     * @param array|null $options
-     * @param array      $deliveryPhoneNumbers
-     * @param bool       $disableDelivery
-     */
-    public function __construct($productToken, array $options = [], $deliveryPhoneNumbers = [], $disableDelivery = false)
+    public function __construct(string $productToken, array $options = [], array $deliveryPhoneNumbers = [], bool $disableDelivery = false)
     {
         $this->disableDelivery = $disableDelivery;
         $this->deliveryPhoneNumbers = $deliveryPhoneNumbers;
@@ -82,10 +48,7 @@ class Client
         $this->options = $resolver->resolve($options + $this->defaultOptions);
     }
 
-    /**
-     * @return array
-     */
-    public static function getUnicodeOptions()
+    public static function getUnicodeOptions(): array
     {
         return [
             self::UNICODE_AUTO,
@@ -94,22 +57,12 @@ class Client
         ];
     }
 
-    /**
-     * @param Message    $message
-     * @param array|null $options
-     */
-    public function sendMessage(Message $message, array $options = [])
+    public function sendMessage(Message $message, array $options = []): void
     {
         $this->sendMessages([$message], $options);
     }
 
-    /**
-     * @param Message[]  $messages
-     * @param array|null $options
-     *
-     * @throws RequestException
-     */
-    public function sendMessages(array $messages, array $options = [])
+    public function sendMessages(array $messages, array $options = []): void
     {
         if ($this->disableDelivery) {
             return;
@@ -128,23 +81,23 @@ class Client
         $json = (object) [
             'messages' => (object) [
                 'authentication' => (object) [
-                    'producttoken' => $this->productToken,
+                    'producttoken' => $this->productToken
                 ],
-                'msg' => $this->createMessagesJson($messages, $options),
-            ],
+                'msg' => $this->createMessagesJson($messages, $options)
+            ]
         ];
 
         $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
 
         try {
             $response = $client->post($this->baseUrl, [
-                'content-type' => 'application/json',
+                'content-type' => 'application/json'
             ], json_encode($json));
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if (!$response instanceof Response || 200 != $response->getStatusCode()) {
+        if (!$response instanceof Response || $response->getStatusCode() != 200) {
             throw new RequestException('Invalid response');
         }
 
@@ -153,21 +106,12 @@ class Client
         }
     }
 
-    /**
-     * @param Message[] $messages
-     * @param array     $options
-     *
-     * @return array
-     *
-     * @throws InvalidSenderException
-     * @throws InvalidRecipientException
-     */
-    protected function createMessagesJson(array $messages, array $options)
+    private function createMessagesJson(array $messages, array $options): array
     {
         $messagesJson = [];
 
         foreach ($messages as $message) {
-            if (0 == count($message->getTo())) {
+            if (count($message->getTo()) == 0) {
                 throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
 
@@ -177,11 +121,11 @@ class Client
 
             $this->assertValidSender($message->getFrom());
 
-            $messageJson = (object) [
+            $messageJson = (object)[
                 'from' => $message->getFrom(),
                 'to' => $this->createRecipientsJson($message->getTo()),
-                'body' => (object) [
-                    'content' => $message->getBody(),
+                'body' => (object)[
+                    'content' => $message->getBody()
                 ],
                 'reference' => $message->getId(),
                 'minimum_number_of_message_parts' => $options['minimum_number_of_message_parts'],
@@ -196,12 +140,7 @@ class Client
         return $messagesJson;
     }
 
-    /**
-     * @param $sender
-     *
-     * @throws InvalidSenderException
-     */
-    public static function assertValidSender($sender)
+    public static function assertValidSender(string $sender): void
     {
         if (!preg_match('#^[a-z0-9]+$#i', $sender)) {
             throw new InvalidSenderException('The sender should only be composed of letters and numbers');
@@ -216,31 +155,20 @@ class Client
         }
     }
 
-    /**
-     * @param array $recipients
-     *
-     * @return array
-     */
-    protected function createRecipientsJson(array $recipients)
+    private function createRecipientsJson(array $recipients): array
     {
         $recipientsJson = [];
 
         foreach ($recipients as $recipient) {
             $recipientsJson[] = (object) [
-                'number' => $recipient,
+                'number' => $recipient
             ];
         }
 
         return $recipientsJson;
     }
 
-    /**
-     * @param object $messageJson
-     * @param string $unicode
-     *
-     * @return object
-     */
-    protected function incorporateUnicodeOption($messageJson, $unicode)
+    private function incorporateUnicodeOption(object $messageJson, string $unicode): object
     {
         switch ($unicode) {
             case self::UNICODE_AUTO:

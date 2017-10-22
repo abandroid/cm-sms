@@ -12,51 +12,17 @@ namespace Endroid\CmSms;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 
-class Message
+final class Message
 {
-    /**
-     * @var string
-     */
-    protected $id;
+    private $id;
+    private $body;
+    private $from;
+    private $to;
+    private $options;
+    private $dateCreated;
+    private $dateUpdated;
+    private $statusCode;
 
-    /**
-     * @var string
-     */
-    protected $body;
-
-    /**
-     * @var string
-     */
-    protected $from;
-
-    /**
-     * @var array
-     */
-    protected $to;
-
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * @var DateTime
-     */
-    protected $dateCreated;
-
-    /**
-     * @var DateTime
-     */
-    protected $dateUpdated;
-
-    /**
-     * @var int
-     */
-    protected $statusCode;
-
-    /**
-     * Message constructor.
-     */
     public function __construct()
     {
         $this->id = str_replace('-', '', Uuid::uuid4());
@@ -66,128 +32,69 @@ class Message
         $this->statusCode = StatusCode::UNSENT;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @param string $body
-     *
-     * @return $this
-     */
-    public function setBody($body)
+    public function setBody(string $body): void
     {
         $this->body = $body;
-
-        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFrom()
+    public function getFrom(): string
     {
         return $this->from;
     }
 
-    /**
-     * @param string $from
-     *
-     * @return $this
-     */
-    public function setFrom($from)
+    public function setFrom(string $from): void
     {
         $this->from = $from;
-
-        return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getTo()
+    public function getTo(): array
     {
         return $this->to;
     }
 
-    /**
-     * @param array $to
-     *
-     * @return $this
-     */
-    public function setTo(array $to)
+    public function setTo(array $to): void
     {
         $this->to = $to;
-
-        return $this;
     }
 
-    /**
-     * @param string $to
-     *
-     * @return $this
-     */
-    public function addTo($to)
+    public function addTo(string $to): void
     {
         if (!in_array($to, $this->to)) {
             $this->to[] = $to;
         }
-
-        return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    /**
-     * @return int
-     */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @param int $statusCode
-     *
-     * @return $this
-     */
-    public function setStatusCode($statusCode)
+    public function setStatusCode(int $statusCode): void
     {
         $this->statusCode = $statusCode;
-
-        return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateCreated()
+    public function getDateCreated(): DateTime
     {
         return $this->dateCreated;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateUpdated()
+    public function getDateUpdated(): DateTime
     {
         return $this->dateUpdated;
     }

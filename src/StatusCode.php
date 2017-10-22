@@ -11,42 +11,16 @@ namespace Endroid\CmSms;
 
 use MyCLabs\Enum\Enum;
 
-class StatusCode extends Enum
+final class StatusCode extends Enum
 {
-    /**
-     * Not sent by the client.
-     */
-    const UNSENT = -2;
+    const UNSENT = -2;      // Not sent by the client
+    const SENT = -1;        // Sent by the client
+    const ACCEPTED = 0;     // Accepted by the operator (CM state)
+    const REJECTED = 1;     // Rejected by CM or the operator (CM state)
+    const DELIVERED = 2;    // Delivered (CM state)
+    const FAILED = 3;       // Failed and will not be delivered (CM state)
 
-    /**
-     * Sent by the client.
-     */
-    const SENT = -1;
-
-    /**
-     * Accepted by the operator (CM state).
-     */
-    const ACCEPTED = 0;
-
-    /**
-     * Rejected by CM or the operator (CM state).
-     */
-    const REJECTED = 1;
-
-    /**
-     * Delivered (CM state).
-     */
-    const DELIVERED = 2;
-
-    /**
-     * Failed and will not be delivered (CM state).
-     */
-    const FAILED = 3;
-
-    /**
-     * @return array
-     */
-    public static function getTranslationKeys()
+    public static function getTranslationKeys(): array
     {
         return [
             self::UNSENT => 'unsent',

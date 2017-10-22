@@ -10,36 +10,19 @@
 namespace Endroid\CmSms;
 
 use DateTime;
-use Endroid\CmSms\Bundle\CmSmsBundle\Exception\InvalidStatusDataException;
+use Endroid\CmSms\Exception\InvalidStatusDataException;
 
-class Status
+final class Status
 {
-    /**
-     * @var array
-     */
-    protected $webHookData;
+    private $webHookData;
+    private $dateCreated;
 
-    /**
-     * @var DateTime
-     */
-    protected $dateCreated;
-
-    /**
-     * Creates a new instance.
-     */
     public function __construct()
     {
         $this->dateCreated = new DateTime();
     }
 
-    /**
-     * @param array $data
-     *
-     * @return static
-     *
-     * @throws InvalidStatusDataException
-     */
-    public static function fromWebHookData(array $data)
+    public static function fromWebHookData(array $data): self
     {
         if (!isset($data['STATUS'])) {
             throw new InvalidStatusDataException('Web hook status data should contain a status code');
@@ -55,34 +38,22 @@ class Status
         return $status;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateCreated()
+    public function getDateCreated(): DateTime
     {
         return $this->dateCreated;
     }
 
-    /**
-     * @return int
-     */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->webHookData['STATUS'];
     }
 
-    /**
-     * @return string
-     */
-    public function getMessageId()
+    public function getMessageId(): string
     {
         return $this->webHookData['REFERENCE'];
     }
 
-    /**
-     * @return array
-     */
-    public function getWebHookData()
+    public function getWebHookData(): array
     {
         return $this->webHookData;
     }

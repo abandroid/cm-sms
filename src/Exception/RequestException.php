@@ -11,6 +11,6 @@ namespace Endroid\CmSms\Exception;
 
 use Exception;
 
-class RequestException extends Exception
+final class RequestException extends Exception
 {
 }

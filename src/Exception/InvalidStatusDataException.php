@@ -7,10 +7,10 @@
  * with this source code in the file LICENSE.
  */
 
-class EndroidCmSmsBundleTest extends PHPUnit_Framework_TestCase
+namespace Endroid\CmSms\Exception;
+
+use Exception;
+
+final class InvalidStatusDataException extends Exception
 {
-    public function testNoTestsYet()
-    {
-        $this->assertTrue(true);
-    }
 }
