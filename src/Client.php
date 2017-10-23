@@ -17,6 +17,7 @@ use GuzzleHttp\Psr7\Response;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use stdClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class Client
@@ -168,7 +169,7 @@ final class Client
         return $recipientsJson;
     }
 
-    private function incorporateUnicodeOption(object $messageJson, string $unicode): object
+    private function incorporateUnicodeOption(stdClass $messageJson, string $unicode): stdClass
     {
         switch ($unicode) {
             case self::UNICODE_AUTO:

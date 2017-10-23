@@ -26,9 +26,11 @@ final class Message
     public function __construct()
     {
         $this->id = str_replace('-', '', Uuid::uuid4());
+        $this->from = '';
+        $this->to = [];
+        $this->options = [];
         $this->dateCreated = new DateTime();
         $this->dateUpdated = new DateTime();
-        $this->to = [];
         $this->statusCode = StatusCode::UNSENT;
     }
 
