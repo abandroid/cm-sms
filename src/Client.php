@@ -82,17 +82,17 @@ final class Client
         $json = (object) [
             'messages' => (object) [
                 'authentication' => (object) [
-                    'producttoken' => $this->productToken
+                    'producttoken' => $this->productToken,
                 ],
-                'msg' => $this->createMessagesJson($messages, $options)
-            ]
+                'msg' => $this->createMessagesJson($messages, $options),
+            ],
         ];
 
         $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
 
         try {
             $response = $client->post($this->baseUrl, [
-                'content-type' => 'application/json'
+                'content-type' => 'application/json',
             ], json_encode($json));
         } catch (Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
@@ -122,11 +122,11 @@ final class Client
 
             $this->assertValidSender($message->getFrom());
 
-            $messageJson = (object)[
+            $messageJson = (object) [
                 'from' => $message->getFrom(),
                 'to' => $this->createRecipientsJson($message->getTo()),
-                'body' => (object)[
-                    'content' => $message->getBody()
+                'body' => (object) [
+                    'content' => $message->getBody(),
                 ],
                 'reference' => $message->getId(),
                 'minimum_number_of_message_parts' => $options['minimum_number_of_message_parts'],
@@ -162,7 +162,7 @@ final class Client
 
         foreach ($recipients as $recipient) {
             $recipientsJson[] = (object) [
-                'number' => $recipient
+                'number' => $recipient,
             ];
         }
 
