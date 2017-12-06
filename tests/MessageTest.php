@@ -13,9 +13,6 @@ use Endroid\CmSms\Message;
 use Endroid\CmSms\StatusCode;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Message
- */
 final class MessageTest extends TestCase
 {
     public function testUnsentWhenCreated()
