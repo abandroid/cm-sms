@@ -98,7 +98,7 @@ final class Client
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if (!$response instanceof Response || $response->getStatusCode() != 200) {
+        if (!$response instanceof Response || 200 != $response->getStatusCode()) {
             throw new RequestException('Invalid response');
         }
 
@@ -112,7 +112,7 @@ final class Client
         $messagesJson = [];
 
         foreach ($messages as $message) {
-            if (count($message->getTo()) == 0) {
+            if (0 == count($message->getTo())) {
                 throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
 
