@@ -1,5 +1,4 @@
-Endroid CM SMS
-==============
+# CM SMS
 
 *By [endroid](https://endroid.nl/)*
 
@@ -27,7 +26,7 @@ Of course you can also download the library and build your own autoloader.
 
 ### Symfony integration
 
-You can easily integrate the library in Symfony with the [EndroidCmSmsBundle](https://github.com/endroid/EndroidCmSmsBundle).
+You can easily integrate the library in Symfony with the [endroid/cm-sms-bundle](https://github.com/endroid/cm-sms-bundle).
 
 ## Usage
 

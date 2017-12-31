@@ -1,7 +1,7 @@
 {
     "name": "endroid/cm-sms",
     "description": "Endroid CM SMS",
-    "keywords": ["endroid", "cm", "sms"],
+    "keywords": ["endroid", "cm", "sms", "php"],
     "homepage": "https://github.com/endroid/cm-sms",
     "type": "library",
     "license": "MIT",
@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": ">=7.1",
         "myclabs/php-enum": "^1.5",
         "psr/http-message": "^1.0",
         "php-http/client-common": "^1.0",
@@ -24,10 +24,10 @@
         "php-http/discovery": "^1.0",
         "jms/serializer": "^1.1",
         "ramsey/uuid": "^3.6",
-        "symfony/options-resolver": "^2.3|^3.0|^4.0"
+        "symfony/options-resolver": "^^3.0|^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^5.7|^6.0",
         "guzzlehttp/psr7": "^1.4"
     },
     "autoload": {
