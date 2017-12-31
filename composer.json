@@ -2,7 +2,7 @@
     "name": "endroid/cm-sms",
     "description": "Endroid CM SMS",
     "keywords": ["endroid", "cm", "sms"],
-    "homepage": "https://github.com/endroid/CmSms",
+    "homepage": "https://github.com/endroid/cm-sms",
     "type": "library",
     "license": "MIT",
     "authors": [
