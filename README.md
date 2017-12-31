@@ -1,7 +1,7 @@
 Endroid CM SMS
 ==============
 
-*By [endroid](http://endroid.nl/)*
+*By [endroid](https://endroid.nl/)*
 
 [![Latest Stable Version](http://img.shields.io/packagist/v/endroid/cm-sms.svg)](https://packagist.org/packages/endroid/cm-sms)
 [![Build Status](http://img.shields.io/travis/endroid/CmSms.svg)](http://travis-ci.org/endroid/CmSms)
