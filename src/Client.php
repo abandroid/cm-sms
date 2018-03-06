@@ -116,7 +116,7 @@ final class Client
                 throw new InvalidRecipientException('Please provide valid SMS recipients for your message');
             }
 
-            if (is_null($message->getFrom())) {
+            if ($message->getFrom() === '') {
                 $message->setFrom($options['sender']);
             }
 
