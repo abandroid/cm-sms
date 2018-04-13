@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "endroid/installer": "^1.0",
+        "endroid/installer": "^1.0.3",
         "jms/serializer": "^1.1",
         "myclabs/php-enum": "^1.5",
         "php-http/client-common": "^1.0",
