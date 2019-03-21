@@ -47,7 +47,7 @@ final class Status
 
     public function getCode(): int
     {
-        return $this->webHookData['STATUS'];
+        return intval($this->webHookData['STATUS']);
     }
 
     public function getMessageId(): string
