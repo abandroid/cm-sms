@@ -27,7 +27,7 @@
         "symfony/options-resolver": "^3.4||^4.0"
     },
     "require-dev": {
-        "endroid/test": "^1.1.4",
+        "endroid/test": "dev-master",
         "guzzlehttp/psr7": "^1.4"
     },
     "autoload": {
