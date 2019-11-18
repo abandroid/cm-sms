@@ -3,7 +3,7 @@
 *By [endroid](https://endroid.nl/)*
 
 [![Latest Stable Version](http://img.shields.io/packagist/v/endroid/cm-sms.svg)](https://packagist.org/packages/endroid/cm-sms)
-[![Build Status](http://img.shields.io/travis/endroid/cm-sms.svg)](http://travis-ci.org/endroid/cm-sms)
+[![Build Status](https://github.com/endroid/cm-sms/workflows/CI/badge.svg)](https://github.com/endroid/cm-sms/actions)
 [![Total Downloads](http://img.shields.io/packagist/dt/endroid/cm-sms.svg)](https://packagist.org/packages/endroid/cm-sms)
 [![Monthly Downloads](http://img.shields.io/packagist/dm/endroid/cm-sms.svg)](https://packagist.org/packages/endroid/cm-sms)
 [![License](http://img.shields.io/packagist/l/endroid/cm-sms.svg)](https://packagist.org/packages/endroid/cm-sms)
