@@ -18,16 +18,23 @@ final class Message
 {
     private $id;
     private $body;
+
+    /** @var string */
     private $from;
+
+    /** @var array */
     private $to;
+
     private $options;
     private $dateCreated;
     private $dateUpdated;
+
+    /** @var int */
     private $statusCode;
 
     public function __construct()
     {
-        $this->id = str_replace('-', '', Uuid::uuid4());
+        $this->id = strval(str_replace('-', '', Uuid::uuid4()->toString()));
         $this->from = '';
         $this->to = [];
         $this->options = [];

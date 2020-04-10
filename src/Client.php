@@ -14,13 +14,9 @@ namespace Endroid\CmSms;
 use Endroid\CmSms\Exception\InvalidRecipientException;
 use Endroid\CmSms\Exception\InvalidSenderException;
 use Endroid\CmSms\Exception\RequestException;
-use Exception;
-use GuzzleHttp\Psr7\Response;
-use Http\Client\Common\HttpMethodsClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use stdClass;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 final class Client
 {
@@ -81,26 +77,26 @@ final class Client
         $optionsResolver->setDefaults($this->options);
         $options = $optionsResolver->resolve($options + $this->options);
 
-        $json = (object) [
-            'messages' => (object) [
-                'authentication' => (object) [
+        $json = [
+            'messages' => [
+                'authentication' => [
                     'producttoken' => $this->productToken,
                 ],
                 'msg' => $this->createMessagesJson($messages, $options),
             ],
         ];
 
-        $client = new HttpMethodsClient(HttpClientDiscovery::find(), MessageFactoryDiscovery::find());
+        $client = HttpClient::create();
 
         try {
-            $response = $client->post($this->baseUrl, [
-                'content-type' => 'application/json',
-            ], json_encode($json));
-        } catch (Exception $exception) {
+            $response = $client->request('POST', $this->baseUrl, [
+                'json' => $json,
+            ]);
+        } catch (\Exception $exception) {
             throw new RequestException('Unable to perform API call: '.$exception->getMessage());
         }
 
-        if (!$response instanceof Response || 200 != $response->getStatusCode()) {
+        if (!$response instanceof ResponseInterface || 200 != $response->getStatusCode()) {
             throw new RequestException('Invalid response');
         }
 
@@ -124,10 +120,10 @@ final class Client
 
             $this->assertValidSender($message->getFrom());
 
-            $messageJson = (object) [
+            $messageJson = [
                 'from' => $message->getFrom(),
                 'to' => $this->createRecipientsJson($message->getTo()),
-                'body' => (object) [
+                'body' => [
                     'content' => $message->getBody(),
                 ],
                 'reference' => $message->getId(),
@@ -171,14 +167,14 @@ final class Client
         return $recipientsJson;
     }
 
-    private function incorporateUnicodeOption(stdClass $messageJson, string $unicode): stdClass
+    private function incorporateUnicodeOption(array $messageJson, string $unicode): array
     {
         switch ($unicode) {
             case self::UNICODE_AUTO:
-                $messageJson->body->type = 'AUTO';
+                $messageJson['body']['type'] = 'AUTO';
                 break;
             case self::UNICODE_FORCE:
-                $messageJson->dcs = 8;
+                $messageJson['dcs'] = 8;
                 break;
             default:
                 break;
