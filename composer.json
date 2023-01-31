@@ -12,12 +12,12 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "jms/serializer": "^1.1",
+        "php": "^7.4||^8.0",
+        "jms/serializer": "^1.1||^2.0||^3.0",
         "myclabs/php-enum": "^1.5",
         "ramsey/uuid": "^3.6||^4.0",
-        "symfony/http-client": "^4.4||^5.0",
-        "symfony/options-resolver": "^3.4||^4.4||^5.0"
+        "symfony/http-client": "^4.4||^5.4||^6.0",
+        "symfony/options-resolver": "^4.4||^5.4||^6.0"
     },
     "require-dev": {
         "endroid/quality": "dev-master"
